@@ -29,8 +29,8 @@ namespace Profeet
             {
                 //Load the image from file and resize it for display
                 img =
-                    new Image<Bgr, byte>(Openfile.FileName)
-                    .Resize(400, 400, Emgu.CV.CvEnum.Inter.Linear, true);
+                    new Image<Bgr, byte>(Openfile.FileName);
+                    //.Resize(400, 400, Emgu.CV.CvEnum.Inter.Linear, true);
                 imageBox1.Image = img;
             }
         }
