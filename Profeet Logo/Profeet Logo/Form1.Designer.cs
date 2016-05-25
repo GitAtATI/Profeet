@@ -35,10 +35,9 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.functionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stitchChecksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.originalImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.functionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorReductionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editPixelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,12 +45,16 @@
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.watershedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stitchChecksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floatStitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.colorShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -80,20 +83,20 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
             this.saveToolStripMenuItem1.Text = "Save As";
             // 
             // editToolStripMenuItem
@@ -104,30 +107,6 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // functionsToolStripMenuItem
-            // 
-            this.functionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorReductionToolStripMenuItem,
-            this.editPixelsToolStripMenuItem,
-            this.edgeDetectionToolStripMenuItem,
-            this.overlayToolStripMenuItem,
-            this.resizeToolStripMenuItem,
-            this.saturationToolStripMenuItem,
-            this.watershedToolStripMenuItem});
-            this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
-            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.functionsToolStripMenuItem.Text = "Functions";
-            // 
-            // stitchChecksToolStripMenuItem
-            // 
-            this.stitchChecksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorLimitToolStripMenuItem,
-            this.floatStitchToolStripMenuItem,
-            this.stitchSimulationToolStripMenuItem});
-            this.stitchChecksToolStripMenuItem.Name = "stitchChecksToolStripMenuItem";
-            this.stitchChecksToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.stitchChecksToolStripMenuItem.Text = "Stitch Checks";
             // 
             // undoToolStripMenuItem
             // 
@@ -142,6 +121,21 @@
             this.originalImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.originalImageToolStripMenuItem.Text = "Original Image";
             this.originalImageToolStripMenuItem.Click += new System.EventHandler(this.originalImageToolStripMenuItem_Click);
+            // 
+            // functionsToolStripMenuItem
+            // 
+            this.functionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorReductionToolStripMenuItem,
+            this.editPixelsToolStripMenuItem,
+            this.edgeDetectionToolStripMenuItem,
+            this.overlayToolStripMenuItem,
+            this.resizeToolStripMenuItem,
+            this.saturationToolStripMenuItem,
+            this.colorShiftToolStripMenuItem,
+            this.watershedToolStripMenuItem});
+            this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
+            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.functionsToolStripMenuItem.Text = "Functions";
             // 
             // colorReductionToolStripMenuItem
             // 
@@ -192,6 +186,16 @@
             this.watershedToolStripMenuItem.Text = "Watershed";
             this.watershedToolStripMenuItem.Click += new System.EventHandler(this.watershedToolStripMenuItem_Click);
             // 
+            // stitchChecksToolStripMenuItem
+            // 
+            this.stitchChecksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorLimitToolStripMenuItem,
+            this.floatStitchToolStripMenuItem,
+            this.stitchSimulationToolStripMenuItem});
+            this.stitchChecksToolStripMenuItem.Name = "stitchChecksToolStripMenuItem";
+            this.stitchChecksToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.stitchChecksToolStripMenuItem.Text = "Stitch Checks";
+            // 
             // colorLimitToolStripMenuItem
             // 
             this.colorLimitToolStripMenuItem.Name = "colorLimitToolStripMenuItem";
@@ -217,15 +221,32 @@
             // 
             this.imageBox1.Location = new System.Drawing.Point(0, 27);
             this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(1396, 485);
+            this.imageBox1.Size = new System.Drawing.Size(1396, 444);
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
+            this.imageBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseUp);
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(0, 477);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(1396, 45);
+            this.trackBar1.TabIndex = 3;
+            // 
+            // colorShiftToolStripMenuItem
+            // 
+            this.colorShiftToolStripMenuItem.Name = "colorShiftToolStripMenuItem";
+            this.colorShiftToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.colorShiftToolStripMenuItem.Text = "Color Shift";
+            this.colorShiftToolStripMenuItem.Click += new System.EventHandler(this.colorShiftToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1396, 513);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.imageBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -235,6 +256,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,7 +285,12 @@
         private System.Windows.Forms.ToolStripMenuItem floatStitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stitchSimulationToolStripMenuItem;
         private Emgu.CV.UI.ImageBox imageBox1;
-        private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> img;
-
+        private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> originalImg;
+        private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> currentImg;
+        private System.Drawing.Point lastClicked;
+        private bool trackingColors;
+        private System.Collections.Generic.Dictionary<Emgu.CV.Structure.Bgr, Emgu.CV.Structure.Bgr> colorKey;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.ToolStripMenuItem colorShiftToolStripMenuItem;
     }
 }
