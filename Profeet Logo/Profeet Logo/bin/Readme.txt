@@ -1,0 +1,1 @@
+[Bb]in/ was removed from the  .gitignore file under # Build results so this folder would be added to the  repository.
