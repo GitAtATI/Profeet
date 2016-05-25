@@ -63,7 +63,7 @@ namespace Profeet
         {
             int colorNumber = 3;
 
-            Matrix<float> points = new Matrix<float>(currentImg.Cols * currentImg.Rows, 1, 3);
+            Matrix<float> points = new Matrix<float>(currentImg.Cols * currentImg.Rows, 3);
             Bgr temp;
             int i = 0;
             for (int y = 0; y < currentImg.Rows; y++)
@@ -78,12 +78,10 @@ namespace Profeet
                 }
             }
 
-            Matrix<Int32> labels = new Matrix<Int32>(currentImg.Rows * currentImg.Cols, 1);
+            Matrix<int> labels = new Matrix<int>(currentImg.Rows * currentImg.Cols, 1);
             MCvTermCriteria criteria = new MCvTermCriteria(10, 1.0);
             criteria.Type = TermCritType.Iter | TermCritType.Eps;
-            Matrix<Int32> centers = new Matrix<Int32>(points.Cols, 3);
-
-            //test
+            Matrix<Single> centers = new Matrix<Single>(colorNumber, 3);
 
             CvInvoke.Kmeans(points, colorNumber, labels, criteria, 10, KMeansInitType.PPCenters, centers);
 
@@ -95,24 +93,15 @@ namespace Profeet
             {
                 for (int x = 0; x < currentImg.Cols; x++)
                 {
-                    try
-                    {
-                        cluster = labels[i, 0];
-                        MCvScalar scalar = CvInvoke.cvGet2D(centers, cluster, 0);
-
-                        color = new Bgr(scalar.V0, scalar.V1, scalar.V2);
-                        //Console.WriteLine(scalar.V0 + ", " + scalar.V1 + ", " + scalar.V2);
-                        outImg[y, x] = color;
-                        i++;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
+                    cluster = labels[i, 0];
+                    color = new Bgr(centers[cluster, 0], centers[cluster, 1], centers[cluster, 2]);
+                    outImg[y, x] = color;
+                    i++;
                 }
             }
 
-            imageBox1.Image = outImg;
+            currentImg = outImg;
+            imageBox1.Image = currentImg;
         }
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
