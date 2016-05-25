@@ -87,6 +87,58 @@ namespace Profeet
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Color/Course Limit Analysis
+            int widthIndex, heightIndex, colorArrayIndex, lastIndex=1;
+            int combineColor;
+            Bgr color = new Bgr();
+            int[] colorArray = new int[1000];
+            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImage;
+            tempImage = img;
+            Size imageSize = tempImage.Size;
+            for (heightIndex = 0; heightIndex < imageSize.Width; heightIndex++)
+            {
+                lastIndex = 1;
+                for (widthIndex = 0; widthIndex < imageSize.Height; widthIndex++)
+                {
+                    color = tempImage[widthIndex, heightIndex];
+                    combineColor = (int)color.Red << 16;
+                    combineColor |= (int)color.Green << 8;
+                    combineColor |= (int)color.Blue;
+                    for (colorArrayIndex = 0; colorArrayIndex < lastIndex; colorArrayIndex++)
+                    {
+                        if (colorArray[colorArrayIndex] == combineColor)
+                            break;
+                    }
+                    if (colorArrayIndex == lastIndex)
+                    {
+                        colorArray[lastIndex - 1] = combineColor;
+                        lastIndex++;
+                    }
+
+                }
+                if (lastIndex >= 4) {
+                    //string message = System.String.Format("There are four colors in row {0} ", heightIndex);
+                    // MessageBox.Show(message);
+
+                    Point p1 = new Point(0,heightIndex);
+                    Point p2 = new Point(imageSize.Width,heightIndex);
+                    LineSegment2D line = new LineSegment2D(p1,p2);
+                    color.Blue = 0;
+                    color.Red = 255;
+                    color.Green = 0;
+
+                    tempImage.Draw(line,color, 1);
+                }
+                for (colorArrayIndex = 0; colorArrayIndex < lastIndex; colorArrayIndex++)
+                {
+                    colorArray[colorArrayIndex] = 0;
+                }
+
+                lastIndex = 1;
+
+
+            }
+            imageBox1.Image = img;
+
         }
 
         private void floatStitchLimitToolStripMenuItem_Click(object sender, EventArgs e)
