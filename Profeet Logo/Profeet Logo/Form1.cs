@@ -83,6 +83,8 @@ namespace Profeet
             criteria.Type = TermCritType.Iter | TermCritType.Eps;
             Matrix<Int32> centers = new Matrix<Int32>(points.Cols, 3);
 
+            //test
+
             CvInvoke.Kmeans(points, colorNumber, labels, criteria, 10, KMeansInitType.PPCenters, centers);
 
             Image<Bgr, byte> outImg = new Image<Bgr, byte>(currentImg.Size);
