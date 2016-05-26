@@ -159,18 +159,28 @@ namespace Profeet
 
         private void watershedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Watershed
+            Profeet_Logo.Form2 form = new Profeet_Logo.Form2(currentImg);
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                imageBox1.Image = form.outputImg;
+                Console.WriteLine("OK");
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                Console.WriteLine("Cancel");
+            }
         }
 
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        { 
             //Color/Course Limit Analysis
             int widthIndex, heightIndex, colorArrayIndex, lastIndex=1;
             int combineColor;
             Bgr color = new Bgr();
             int[] colorArray = new int[1000];
             Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImage;
-            tempImage = img;
+            tempImage = currentImg;
             Size imageSize = tempImage.Size;
             for (heightIndex = 0; heightIndex < imageSize.Width; heightIndex++)
             {
@@ -215,7 +225,7 @@ namespace Profeet
 
 
             }
-            imageBox1.Image = img;
+            imageBox1.Image = currentImg;
 
         }
 
