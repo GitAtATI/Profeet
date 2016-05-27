@@ -42,9 +42,9 @@ namespace Profeet
         {
             double cannyThreshold = 180.0;
             double cannyThresholdLinking = 120.0;
-            UMat cannyEdges = new UMat();
+            Mat cannyEdges = new Mat();
             CvInvoke.Canny(currentImg, cannyEdges, cannyThreshold, cannyThresholdLinking);
-            currentImg = new Image<Bgr, byte>(cannyEdges.Bitmap);
+            currentImg = cannyEdges.ToImage<Bgr,Byte>();
             imageBox1.Image = cannyEdges;
         }
 
@@ -181,7 +181,7 @@ namespace Profeet
             Bgr color = new Bgr();
             int[] colorArray = new int[1000];
             Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImage;
-            tempImage = img;
+            tempImage = currentImg;
             Size imageSize = tempImage.Size;
             for (heightIndex = 0; heightIndex < imageSize.Width; heightIndex++)
             {
@@ -226,7 +226,7 @@ namespace Profeet
 
 
             }
-            imageBox1.Image = img;
+            imageBox1.Image = tempImage;
 
         }
 
