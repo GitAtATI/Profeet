@@ -34,7 +34,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.markerIndex = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.markerIndex)).BeginInit();
             this.SuspendLayout();
             // 
             // imageBox1
@@ -88,11 +91,33 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // markerIndex
+            // 
+            this.markerIndex.Location = new System.Drawing.Point(364, 478);
+            this.markerIndex.Maximum = 5;
+            this.markerIndex.Minimum = 1;
+            this.markerIndex.Name = "markerIndex";
+            this.markerIndex.Size = new System.Drawing.Size(441, 45);
+            this.markerIndex.TabIndex = 8;
+            this.markerIndex.Value = 1;
+            this.markerIndex.ValueChanged += new System.EventHandler(this.markerIndex_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(812, 478);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(13, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "1";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1396, 513);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.markerIndex);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -101,7 +126,9 @@
             this.Name = "Form2";
             this.Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.markerIndex)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -117,5 +144,8 @@
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> originalImg;
         public Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> outputImg;
         private Emgu.CV.Image<Emgu.CV.Structure.Gray, System.Byte> markerMask;
+        private Emgu.CV.Image<Emgu.CV.Structure.Gray, int> testMask;
+        private System.Windows.Forms.TrackBar markerIndex;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -22,39 +22,51 @@ namespace Profeet_Logo
             mouseDrag = false;
             prevPt = new Point(-1, -1);
             markerMask = new Image<Gray, byte>(img.Width, img.Height, new Gray(0));
+            testMask = new Image<Gray, int>(img.Width, img.Height, new Gray(0));
             originalImg = img;
             outputImg = originalImg;
             imageBox1.Image = outputImg;
             imageBox1.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
             int i, j, compCount = 0;
-
-            //I am unsure if these types are correct. contours seems to work
-            //but hierarchy throws an exception (replacing hierarchy with a
-            //null in the FindContours call avoids the exception
-            //However, VecOfVecOfInt makes the most sense, so I am stuck
+            
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
-            VectorOfVectorOfInt hierarchy = new VectorOfVectorOfInt();
+            Mat hierarchy = new Mat();
+
+            CvInvoke.FindContours(markerMask, contours, hierarchy, RetrType.Ccomp, ChainApproxMethod.ChainApproxSimple);
+            
+            Image<Gray, int> markers = new Image<Gray, int>(markerMask.Width, markerMask.Height, new Gray(0));
+
+            //create a Bitmap to access the hierarchy data
+            Bitmap bmp = hierarchy.Bitmap;
+            Image<Gray, int> test = new Image<Gray, int>(bmp);
+            
+            //this is the magic loop I don't understand. I think it goes through all the contours and sets their values to
+            //1, 2, 3 etc. (from compCount, based on the number of marks made). These values are then used by the
+            //Watershed call to actually run Watershed
+            for (int idx = 0; idx >= 0; idx = (int)test[idx, 0].Intensity, compCount++)
+            {
+                CvInvoke.DrawContours(markers, contours, idx, new MCvScalar(compCount + 1));
+            }
+
 
             try
             {
-                CvInvoke.FindContours(markerMask, contours, hierarchy, RetrType.Ccomp, ChainApproxMethod.ChainApproxSimple);
+                CvInvoke.Watershed(originalImg, markers);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
 
-            Matrix<int> markers = new Matrix<int>(markerMask.Width, markerMask.Height, 0);
-
-            for (int idx = 0; idx >= 0; idx = hierarchy[idx][0], compCount++)
-            {
-                CvInvoke.DrawContours(markers, contours, idx, new MCvScalar(compCount + 1));
-            }
-
+            //All the code below here is untested because I haven't managed to get the above code working
+            //However, this stuff is pretty simple and I think it will work without much hassle
+            
+            //Creates an array of random colors for the output image
             Bgr[] colorTab = new Bgr[compCount];
             for (i = 0; i < compCount; i++)
             {
@@ -62,8 +74,32 @@ namespace Profeet_Logo
                 colorTab[i] = new Bgr(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
             }
 
-            CvInvoke.Watershed(outputImg, markers);
+            //Goes through checking the index of each pixel in markers
+            //if the index is -1, it's a border
+            //if the index is a number between 0 and compCount, it's a watershed basin
+            //else, the pixel is set to black-- I never see this happen in my working C++ code
+            Image<Bgr, byte> wshed = new Image<Bgr, byte>(markers.Size);
+            for (i = 0; i < markers.Rows; i++)
+            {
+                for (j = 0; j < markers.Cols; j++)
+                {
+                    int index = (int)markers[i, j].Intensity;
+                    if (index == -1)
+                    {
+                        wshed[i, j] = new Bgr(255, 255, 255);
+                    }
+                    else if (index <= 0 || index > compCount)
+                    {
+                        wshed[i, j] = new Bgr(0, 0, 0);
+                    }
+                    else
+                    {
+                        wshed[i, j] = colorTab[index - 1];
+                    }
+                }
+            }
 
+            imageBox1.Image = wshed;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -108,6 +144,11 @@ namespace Profeet_Logo
                 prevPt = pt;
                 imageBox1.Image = outputImg;
             }
+        }
+
+        private void markerIndex_ValueChanged(object sender, EventArgs e)
+        {
+            label1.Text = "" + markerIndex.Value;
         }
     }
 }
