@@ -44,6 +44,7 @@
             this.overlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.watershedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchChecksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,6 @@
             this.stitchSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.colorShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -83,21 +83,23 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem1.Text = "Save As";
+            this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -179,6 +181,13 @@
             this.saturationToolStripMenuItem.Text = "Saturation";
             this.saturationToolStripMenuItem.Click += new System.EventHandler(this.saturationToolStripMenuItem_Click);
             // 
+            // colorShiftToolStripMenuItem
+            // 
+            this.colorShiftToolStripMenuItem.Name = "colorShiftToolStripMenuItem";
+            this.colorShiftToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.colorShiftToolStripMenuItem.Text = "Color Shift";
+            this.colorShiftToolStripMenuItem.Click += new System.EventHandler(this.colorShiftToolStripMenuItem_Click);
+            // 
             // watershedToolStripMenuItem
             // 
             this.watershedToolStripMenuItem.Name = "watershedToolStripMenuItem";
@@ -234,13 +243,6 @@
             this.trackBar1.Size = new System.Drawing.Size(1396, 45);
             this.trackBar1.TabIndex = 3;
             // 
-            // colorShiftToolStripMenuItem
-            // 
-            this.colorShiftToolStripMenuItem.Name = "colorShiftToolStripMenuItem";
-            this.colorShiftToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.colorShiftToolStripMenuItem.Text = "Color Shift";
-            this.colorShiftToolStripMenuItem.Click += new System.EventHandler(this.colorShiftToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,5 +294,10 @@
         private System.Collections.Generic.Dictionary<Emgu.CV.Structure.Bgr, Emgu.CV.Structure.Bgr> colorKey;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.ToolStripMenuItem colorShiftToolStripMenuItem;
+        private System.Windows.Forms.Form generalForm;
+        private string origImageFile;
+        private Emgu.CV.Mat matCurrentImage;
+        private Emgu.CV.Mat matTempImage;
+        private Profeet_Logo.functionControls modelessForm;
     }
 }
