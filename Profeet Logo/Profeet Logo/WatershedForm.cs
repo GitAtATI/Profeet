@@ -83,7 +83,5 @@ namespace Profeet_Logo
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
- 
     }
 }

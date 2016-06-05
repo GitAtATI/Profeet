@@ -124,7 +124,6 @@ namespace Profeet
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Undo function
-
         }
 
         private void colorReductionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,7 +163,8 @@ namespace Profeet
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Edit at pixel level
+            Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
+            DialogResult result = form.ShowDialog();
         }
 
         private void overlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -422,6 +422,7 @@ namespace Profeet
             if (inBounds(e.Location, matCurrentImage))
             {
                 lastClicked = e.Location;
+                Console.WriteLine(lastClicked);
                 if (trackingColors && colorKey.Count < 3)
                 {
                     Image<Bgr, Byte> localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
@@ -437,7 +438,9 @@ namespace Profeet
         }
         private static Boolean inBounds(Point p, Mat matImage)
         {
-            if ((p.X > 0 && p.Y > 0) && (p.X < matImage.Width && p.Y < matImage.Height))
+            int width = matImage.Width;
+            int height = matImage.Height;
+            if ((p.X > 0 && p.Y > 0) && (p.X < width && p.Y < height))
                 return true;
             return false;
         }
@@ -470,7 +473,17 @@ namespace Profeet
             int thresholdLinking = Convert.ToInt32(trackbarThresholdLinking.Value);
 
             Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
-            localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
+            localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>();
+            /*
+            float[][] imgArray = (float[][]) matCurrentImage.Data;
+            for (int y = 0; y < localImg.Height; y++)
+            {
+                for (int x = 0; x < localImg.Width; x++)
+                {
+                    localImg[y, x] = imgArray[y][x];
+                }
+            }
+            */
             Mat cannyImage = new Mat();
             CvInvoke.Canny(localImg, cannyImage, threshold, thresholdLinking);
             matTempImage = cannyImage;
@@ -701,6 +714,5 @@ namespace Profeet
             matTempImage = localImg.Mat;
             imageBox1.Image = matTempImage;
         }
-
     }
-    }
+}
