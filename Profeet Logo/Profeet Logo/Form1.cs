@@ -36,6 +36,9 @@ namespace Profeet
             {
                 //Load the image from file and resize it for display
                 originalImg = new Image<Bgr, byte>(Openfile.FileName);
+                currentImg = new Image<Bgr, byte>(originalImg.Size);
+                tempImg = new Image<Bgr, byte>(originalImg.Size);
+                currentImg = originalImg.Copy();
                 matCurrentImage = new Mat(Openfile.FileName, Emgu.CV.CvEnum.LoadImageType.Color);
                 imageBox1.Image = matCurrentImage;
             }
@@ -102,22 +105,22 @@ namespace Profeet
             btnApply.Visible = false;
 
             generalForm = form;
-            matTempImage = matCurrentImage;
+            tempImg = currentImg.Copy();
 
             DialogResult result = form.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                matCurrentImage = matTempImage;
+                currentImg = tempImg.Copy();
             }
-            imageBox1.Image = matCurrentImage;
+            imageBox1.Image = currentImg;
 
 
         }
 
         private void originalImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            matCurrentImage = originalImg.Mat;
+            currentImg = originalImg.Copy();
             imageBox1.Image = originalImg;
         }
 
@@ -152,13 +155,13 @@ namespace Profeet
             form.Controls.Add(textColors);
             form.imageFunction = new AddImageDelegate(this.colorReduction);
             generalForm = form;
-            matTempImage = matCurrentImage;
+            tempImg = currentImg.Copy();
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                matCurrentImage = matTempImage;
+                currentImg = tempImg;
             }
-            imageBox1.Image = matCurrentImage;
+            imageBox1.Image = currentImg;
 
         }
 
@@ -199,11 +202,11 @@ namespace Profeet
             btnApply.Visible = false;
 
             generalForm = form;
-            matTempImage = matCurrentImage;
+            tempImg = currentImg.Copy();
 
             DialogResult result = form.ShowDialog();
 
-            imageBox1.Image = matCurrentImage;
+            imageBox1.Image = currentImg;
 
         }
 
@@ -244,15 +247,15 @@ namespace Profeet
             //form.Controls.Add(confirmation);
             form.imageFunction = new AddImageDelegate(this.resizeImage);
             generalForm = form;
-            matTempImage = matCurrentImage;
+            tempImg = currentImg.Copy();
 
             DialogResult result = form.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                matCurrentImage = matTempImage.Clone();
+                currentImg = tempImg.Copy();
             }
-            imageBox1.Image = matCurrentImage;
+            imageBox1.Image = currentImg;
 
         }
 
@@ -287,16 +290,9 @@ namespace Profeet
             btnApply.Visible = false;
 
             generalForm = modelessForm;
-            matTempImage = matCurrentImage;
+            tempImg = currentImg.Copy();
 
             modelessForm.Show();
-/*
-            if (result == DialogResult.OK)
-            {
-                matCurrentImage = matTempImage.Clone();
-            }
-            imageBox1.Image = matCurrentImage;
-            */
         }
 
         private void colorShiftToolStripMenuItem_Click(object sender, EventArgs e)
@@ -454,12 +450,8 @@ namespace Profeet
             txtbx = (TextBox)generalForm.Controls["textHeight"];
             int height = Convert.ToInt32(txtbx.Text);
 
-            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
-            localImg = matTempImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
-
-            localImg = localImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Linear, true);
-            matTempImage = localImg.Mat;
-            imageBox1.Image = matTempImage;
+            tempImg = tempImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Linear, true);
+            imageBox1.Image = tempImg;
         }
 
         private void edgeDetect()
@@ -469,12 +461,10 @@ namespace Profeet
             TrackBar trackbarThresholdLinking = new TrackBar();
             int thresholdLinking = Convert.ToInt32(trackbarThresholdLinking.Value);
 
-            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
-            localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
             Mat cannyImage = new Mat();
-            CvInvoke.Canny(localImg, cannyImage, threshold, thresholdLinking);
-            matTempImage = cannyImage;
-            imageBox1.Image = matTempImage;
+            CvInvoke.Canny(currentImg, cannyImage, threshold, thresholdLinking);
+            tempImg = cannyImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
+            imageBox1.Image = tempImg;
         }
 
         private void colorLimit()
@@ -635,8 +625,7 @@ namespace Profeet
 
             Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
             Mat matLocalImg = new Mat();
-            matLocalImg = matTempImage.Clone();
-            localImg = matTempImage.ToImage< Emgu.CV.Structure.Bgr, System.Byte>(false);
+            matLocalImg = tempImg.Mat;
 
             Matrix<float> points = new Matrix<float>(matLocalImg.Cols * matLocalImg.Rows, 3);
             Bgr temp;
@@ -645,7 +634,7 @@ namespace Profeet
             {
                 for (int x = 0; x < matLocalImg.Cols; x++)
                 {
-                    temp = localImg[y, x];
+                    temp = tempImg[y, x];
                     points.Data[i, 0] = (float)temp.Blue;
                     points.Data[i, 1] = (float)temp.Green;
                     points.Data[i, 2] = (float)temp.Red;
@@ -669,12 +658,12 @@ namespace Profeet
                 {
                     cluster = labels[i, 0];
                     color = new Bgr(centers[cluster, 0], centers[cluster, 1], centers[cluster, 2]);
-                    localImg[y, x] = color;
+                    tempImg[y, x] = color;
                     i++;
                 }
             }
-            matTempImage = localImg.Mat;
-            imageBox1.Image = matTempImage;
+
+            imageBox1.Image = tempImg;
         }
 
         private void overlay()
@@ -682,8 +671,7 @@ namespace Profeet
             TrackBar trackbarThreshold = (TrackBar)generalForm.Controls["Threshold"];
             double threshold = Convert.ToDouble(trackbarThreshold.Value);
 
-            Image<Bgr, byte> localImg = matCurrentImage.ToImage<Bgr, Byte>(false);
-            Image<Bgr, byte> newImg = (1.0 - threshold) * originalImg + threshold * localImg;
+            Image<Bgr, byte> newImg = (1.0 - threshold) * originalImg + threshold * tempImg;
 
             imageBox1.Image = newImg;
 
@@ -694,12 +682,10 @@ namespace Profeet
             double threshold = Convert.ToDouble(trackbarThreshold.Value);
 
             Rectangle ccomp;
-            Image<Bgr, byte> localImg = matCurrentImage.ToImage<Bgr, Byte>(false);
-            CvInvoke.FloodFill(localImg, null, lastClicked,
+            CvInvoke.FloodFill(tempImg, null, lastClicked,
                 new MCvScalar(threshold, threshold, threshold), out ccomp, new MCvScalar(20),
                 new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
-            matTempImage = localImg.Mat;
-            imageBox1.Image = matTempImage;
+            imageBox1.Image = tempImg;
         }
 
     }
