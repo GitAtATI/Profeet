@@ -168,11 +168,6 @@ namespace Profeet
         {
             Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
             DialogResult result = form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                matCurrentImage = form.matOutputImage;
-            }
-            imageBox1.Image = matCurrentImage;
         }
 
         private void overlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -469,6 +464,8 @@ namespace Profeet
             TrackBar trackbarThresholdLinking = new TrackBar();
             int thresholdLinking = Convert.ToInt32(trackbarThresholdLinking.Value);
 
+            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
+            localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
             Mat cannyImage = new Mat();
             CvInvoke.Canny(currentImg, cannyImage, threshold, thresholdLinking);
             tempImg = cannyImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
