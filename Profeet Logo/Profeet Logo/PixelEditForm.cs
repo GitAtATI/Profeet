@@ -46,7 +46,7 @@ namespace Profeet_Logo
         {
             if (imageBox1.FunctionalMode.Equals(mode[1])) return;
             mouseDrag = true;
-            prevPt = new Point(e.X, e.Y);
+            prevPt = getAdjustedClick(e);
         }
 
         private void imageBox1_MouseUp(object sender, MouseEventArgs e)
@@ -61,7 +61,7 @@ namespace Profeet_Logo
             if (imageBox1.FunctionalMode.Equals(mode[1])) return;
             if (mouseDrag)
             {
-                Point pt = new Point(e.X, e.Y);
+                Point pt = getAdjustedClick(e);
                 if (prevPt.X < 0) prevPt = pt;
                 CvInvoke.Line(matCurrentImage, prevPt, pt, new MCvScalar(activeColor.B, activeColor.G, activeColor.R));
                 prevPt = pt;
@@ -69,11 +69,37 @@ namespace Profeet_Logo
             }
         }
 
+        //Alternates between no zoom/pan (paint mode) and zoom/pan mode
         private void imgModeButton_Click(object sender, EventArgs e)
         {
             if (imageBox1.FunctionalMode.Equals(mode[0]))
                 imageBox1.FunctionalMode = mode[1];
             else imageBox1.FunctionalMode = mode[0];
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            matOutputImage = matCurrentImage.Clone();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        //Takes click on zoomed in and/or panned image
+        //Returns location of that click on the actual image, rather than the ImageBox
+        private Point getAdjustedClick(MouseEventArgs e)
+        {
+            double xOffset = imageBox1.HorizontalScrollBar.Value;
+            double yOffset = imageBox1.VerticalScrollBar.Value;
+            double zoom = imageBox1.ZoomScale;
+            int x = (int) (xOffset + (e.X / zoom));
+            int y = (int) (yOffset + (e.Y / zoom));
+            return new Point(x, y);
         }
     }
 }

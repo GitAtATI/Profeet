@@ -168,6 +168,11 @@ namespace Profeet
         {
             Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
             DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                matCurrentImage = form.matOutputImage;
+            }
+            imageBox1.Image = matCurrentImage;
         }
 
         private void overlayToolStripMenuItem_Click(object sender, EventArgs e)
