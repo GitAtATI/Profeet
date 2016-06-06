@@ -127,7 +127,6 @@ namespace Profeet
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Undo function
-
         }
 
         private void colorReductionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,7 +166,8 @@ namespace Profeet
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Edit at pixel level
+            Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
+            DialogResult result = form.ShowDialog();
         }
 
         private void overlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -418,6 +418,7 @@ namespace Profeet
             if (inBounds(e.Location, matCurrentImage))
             {
                 lastClicked = e.Location;
+                Console.WriteLine(lastClicked);
                 if (trackingColors && colorKey.Count < 3)
                 {
                     Image<Bgr, Byte> localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
@@ -433,7 +434,9 @@ namespace Profeet
         }
         private static Boolean inBounds(Point p, Mat matImage)
         {
-            if ((p.X > 0 && p.Y > 0) && (p.X < matImage.Width && p.Y < matImage.Height))
+            int width = matImage.Width;
+            int height = matImage.Height;
+            if ((p.X > 0 && p.Y > 0) && (p.X < width && p.Y < height))
                 return true;
             return false;
         }
@@ -687,6 +690,5 @@ namespace Profeet
                 new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
             imageBox1.Image = tempImg;
         }
-
     }
-    }
+}
