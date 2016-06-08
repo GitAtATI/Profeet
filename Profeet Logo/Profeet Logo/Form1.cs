@@ -46,7 +46,7 @@ namespace Profeet
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Save Image
-            matCurrentImage.Save(origImageFile);
+            currentImg.Save(origImageFile);
         }
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -55,7 +55,7 @@ namespace Profeet
             saveAsFile.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
             if (saveAsFile.ShowDialog() == DialogResult.OK)
             {
-                matCurrentImage.Save(saveAsFile.FileName);
+                currentImg.Save(saveAsFile.FileName);
             }
 
         }
@@ -453,7 +453,7 @@ namespace Profeet
             txtbx = (TextBox)generalForm.Controls["textHeight"];
             int height = Convert.ToInt32(txtbx.Text);
 
-            tempImg = tempImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Linear, true);
+            tempImg = tempImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Area, true);
             imageBox1.Image = tempImg;
         }
 
