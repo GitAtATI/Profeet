@@ -427,7 +427,6 @@ namespace Profeet
             if (inBounds(e.Location, matCurrentImage))
             {
                 lastClicked = e.Location;
-                Console.WriteLine(lastClicked);
                 if (trackingColors && colorKey.Count < 3)
                 {
                     Image<Bgr, Byte> localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
