@@ -70,6 +70,8 @@ namespace Profeet_Logo
 
             if (radioPaint.Checked == true)
             {
+                //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
+                //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
                 CvInvoke.Line(matCurrentImage, pt, pt, activeColor, trackBot.Value);
             }
             else

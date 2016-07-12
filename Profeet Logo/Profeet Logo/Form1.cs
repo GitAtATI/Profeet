@@ -433,6 +433,7 @@ namespace Profeet
         }
         private static Boolean inBounds(Point p, Mat matImage)
         {
+            if (matImage == null) return false;
             int width = matImage.Width;
             int height = matImage.Height;
             if ((p.X > 0 && p.Y > 0) && (p.X < width && p.Y < height))
@@ -673,9 +674,28 @@ namespace Profeet
         private void overlay()
         {
             TrackBar trackbarThreshold = (TrackBar)generalForm.Controls["Threshold"];
-            double threshold = Convert.ToDouble(trackbarThreshold.Value);
+            double threshold = Convert.ToDouble(trackbarThreshold.Value) / 100;
 
-            Image<Bgr, byte> newImg = (1.0 - threshold) * originalImg + threshold * tempImg;
+            Image<Bgr, byte> newImg;
+            if (originalImg.Size.Equals(tempImg.Size))
+            {
+                newImg = (1.0 - threshold) * originalImg + threshold * tempImg;
+            }
+            else
+            {
+                int factorX = originalImg.Width / tempImg.Width;
+                int factorY = originalImg.Height / tempImg.Height;
+
+                int scaledX = tempImg.Width * factorX;
+                int scaledY = tempImg.Height * factorY;
+
+                Image<Bgr, byte> scaledOriginalImg = originalImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
+                Console.WriteLine(scaledOriginalImg.Size);
+                Image<Bgr, byte> scaledTempImg = tempImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
+                Console.WriteLine(scaledTempImg.Size);
+
+                newImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledTempImg;
+            }
 
             imageBox1.Image = newImg;
 
