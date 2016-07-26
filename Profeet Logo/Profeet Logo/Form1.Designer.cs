@@ -41,7 +41,6 @@
             this.colorReductionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editPixelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.overlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,8 +50,11 @@
             this.floatStitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
+            this.overlayTrackBar = new System.Windows.Forms.TrackBar();
+            this.steppingResizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -128,11 +130,11 @@
             this.colorReductionToolStripMenuItem,
             this.editPixelsToolStripMenuItem,
             this.edgeDetectionToolStripMenuItem,
-            this.overlayToolStripMenuItem,
             this.resizeToolStripMenuItem,
             this.saturationToolStripMenuItem,
             this.colorShiftToolStripMenuItem,
-            this.watershedToolStripMenuItem});
+            this.watershedToolStripMenuItem,
+            this.steppingResizeToolStripMenuItem});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
@@ -157,13 +159,6 @@
             this.edgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.edgeDetectionToolStripMenuItem.Text = "Edge Detection";
             this.edgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.edgeDetectionToolStripMenuItem_Click);
-            // 
-            // overlayToolStripMenuItem
-            // 
-            this.overlayToolStripMenuItem.Name = "overlayToolStripMenuItem";
-            this.overlayToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.overlayToolStripMenuItem.Text = "Overlay";
-            this.overlayToolStripMenuItem.Click += new System.EventHandler(this.overlayToolStripMenuItem_Click);
             // 
             // resizeToolStripMenuItem
             // 
@@ -233,20 +228,40 @@
             this.imageBox1.TabStop = false;
             this.imageBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseUp);
             // 
+            // overlayTrackBar
+            // 
+            this.overlayTrackBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.overlayTrackBar.Location = new System.Drawing.Point(0, 468);
+            this.overlayTrackBar.Maximum = 100;
+            this.overlayTrackBar.Name = "overlayTrackBar";
+            this.overlayTrackBar.Size = new System.Drawing.Size(1396, 45);
+            this.overlayTrackBar.TabIndex = 3;
+            this.overlayTrackBar.Scroll += new System.EventHandler(this.overlayTrackBar_Scroll);
+            // 
+            // steppingResizeToolStripMenuItem
+            // 
+            this.steppingResizeToolStripMenuItem.Name = "steppingResizeToolStripMenuItem";
+            this.steppingResizeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.steppingResizeToolStripMenuItem.Text = "Stepping Resize";
+            this.steppingResizeToolStripMenuItem.Click += new System.EventHandler(this.steppingResizeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1396, 513);
+            this.Controls.Add(this.overlayTrackBar);
             this.Controls.Add(this.imageBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,7 +281,6 @@
         private System.Windows.Forms.ToolStripMenuItem colorReductionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editPixelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem edgeDetectionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem overlayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saturationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem watershedToolStripMenuItem;
@@ -287,5 +301,7 @@
         private Emgu.CV.Mat matCurrentImage;
         private Emgu.CV.Mat matTempImage;
         private Profeet_Logo.functionControls modelessForm;
+        private System.Windows.Forms.TrackBar overlayTrackBar;
+        private System.Windows.Forms.ToolStripMenuItem steppingResizeToolStripMenuItem;
     }
 }

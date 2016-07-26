@@ -169,47 +169,7 @@ namespace Profeet
             Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
             DialogResult result = form.ShowDialog();
         }
-
-        private void overlayToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            Profeet_Logo.functionControls form = new Profeet_Logo.functionControls(currentImg);
-
-            //Generate labels and trackbars
-            //Create a new label and text box
-            Label labelThreshold = new Label();
-            TrackBar trackbarThreshold = new TrackBar();
-
-            //Initialize label's property
-            labelThreshold.Text = "Threshold";
-            labelThreshold.Location = new Point(30, 10);
-            labelThreshold.AutoSize = true;
-
-            //Initialize textBoxes Property
-            trackbarThreshold.Name = "Threshold";
-            trackbarThreshold.Location = new Point(50, 30);
-            trackbarThreshold.Minimum = 0;
-            trackbarThreshold.Maximum = 100;
-
-            trackbarThreshold.Scroll += (object confirmsender, EventArgs confirmE) => { form.imageFunction(); };
-
-            //Add the labels and text box to the form
-            form.Controls.Add(labelThreshold);
-            form.Controls.Add(trackbarThreshold);
-            form.imageFunction = new AddImageDelegate(this.overlay);
-            //Hide the Apply button
-            Button btnApply = (Button)form.Controls["Apply"];
-            btnApply.Visible = false;
-
-            generalForm = form;
-            tempImg = currentImg.Copy();
-
-            DialogResult result = form.ShowDialog();
-
-            imageBox1.Image = currentImg;
-
-        }
-
+        
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //resize
@@ -337,6 +297,11 @@ namespace Profeet
             }
         }
 
+        private void steppingResizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //resize
@@ -431,6 +396,7 @@ namespace Profeet
             }
             
         }
+
         private static Boolean inBounds(Point p, Mat matImage)
         {
             if (matImage == null) return false;
@@ -440,12 +406,7 @@ namespace Profeet
                 return true;
             return false;
         }
-    /*    private static Boolean inBounds(Point p, Image<Bgr, byte> i)
-        {
-            if ((p.X > 0 && p.Y > 0) && (p.X < i.Width && p.Y < i.Height))
-                return true;
-            return false;
-        }*/
+
         private void resizeImage()
         {
             TextBox txtbx = (TextBox)generalForm.Controls["textWidth"];
@@ -471,7 +432,6 @@ namespace Profeet
             tempImg = cannyImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
             imageBox1.Image = tempImg;
         }
-
         private void colorLimit()
         {
             //Color/Course Limit Analysis
@@ -671,10 +631,26 @@ namespace Profeet
             imageBox1.Image = tempImg;
         }
 
-        private void overlay()
+        private void saturation()
         {
             TrackBar trackbarThreshold = (TrackBar)generalForm.Controls["Threshold"];
-            double threshold = Convert.ToDouble(trackbarThreshold.Value) / 100;
+            double threshold = Convert.ToDouble(trackbarThreshold.Value);
+
+            Rectangle ccomp;
+            CvInvoke.FloodFill(tempImg, null, lastClicked,
+                new MCvScalar(threshold, threshold, threshold), out ccomp, new MCvScalar(20),
+                new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+            imageBox1.Image = tempImg;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            imageBox1.Size = new System.Drawing.Size(this.Size.Width - 15, this.Size.Height - 120);
+        }
+
+        private void overlayTrackBar_Scroll(object sender, EventArgs e)
+        {
+            double threshold = Convert.ToDouble(overlayTrackBar.Value) / 100;
 
             Image<Bgr, byte> newImg;
             if (originalImg.Size.Equals(tempImg.Size))
@@ -690,26 +666,13 @@ namespace Profeet
                 int scaledY = tempImg.Height * factorY;
 
                 Image<Bgr, byte> scaledOriginalImg = originalImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
-                Console.WriteLine(scaledOriginalImg.Size);
                 Image<Bgr, byte> scaledTempImg = tempImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
-                Console.WriteLine(scaledTempImg.Size);
 
                 newImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledTempImg;
             }
 
             imageBox1.Image = newImg;
-
         }
-        private void saturation()
-        {
-            TrackBar trackbarThreshold = (TrackBar)generalForm.Controls["Threshold"];
-            double threshold = Convert.ToDouble(trackbarThreshold.Value);
 
-            Rectangle ccomp;
-            CvInvoke.FloodFill(tempImg, null, lastClicked,
-                new MCvScalar(threshold, threshold, threshold), out ccomp, new MCvScalar(20),
-                new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
-            imageBox1.Image = tempImg;
-        }
     }
 }
