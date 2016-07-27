@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorButton = new System.Windows.Forms.Button();
@@ -44,28 +43,15 @@
             this.labelTop = new System.Windows.Forms.Label();
             this.buttonEyedropper = new System.Windows.Forms.Button();
             this.colorBox = new Emgu.CV.UI.ImageBox();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // imageBox1
-            // 
-            this.imageBox1.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.imageBox1.Location = new System.Drawing.Point(12, 12);
-            this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(500, 500);
-            this.imageBox1.TabIndex = 3;
-            this.imageBox1.TabStop = false;
-            this.imageBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseDown);
-            this.imageBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseMove);
-            this.imageBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseUp);
-            // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(520, 459);
+            this.okButton.Location = new System.Drawing.Point(12, 174);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 4;
@@ -75,7 +61,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(520, 488);
+            this.cancelButton.Location = new System.Drawing.Point(12, 203);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
@@ -85,7 +71,7 @@
             // 
             // colorButton
             // 
-            this.colorButton.Location = new System.Drawing.Point(520, 41);
+            this.colorButton.Location = new System.Drawing.Point(12, 41);
             this.colorButton.Name = "colorButton";
             this.colorButton.Size = new System.Drawing.Size(75, 23);
             this.colorButton.TabIndex = 6;
@@ -95,20 +81,19 @@
             // 
             // imgModeButton
             // 
-            this.imgModeButton.Location = new System.Drawing.Point(519, 430);
+            this.imgModeButton.Location = new System.Drawing.Point(12, 145);
             this.imgModeButton.Name = "imgModeButton";
             this.imgModeButton.Size = new System.Drawing.Size(75, 23);
             this.imgModeButton.TabIndex = 7;
             this.imgModeButton.Text = "Mode";
             this.imgModeButton.UseVisualStyleBackColor = true;
-            this.imgModeButton.Click += new System.EventHandler(this.imgModeButton_Click);
             // 
             // radioPaint
             // 
             this.radioPaint.AutoSize = true;
             this.radioPaint.Checked = true;
             this.radioPaint.Cursor = System.Windows.Forms.Cursors.Default;
-            this.radioPaint.Location = new System.Drawing.Point(520, 99);
+            this.radioPaint.Location = new System.Drawing.Point(12, 99);
             this.radioPaint.Name = "radioPaint";
             this.radioPaint.Size = new System.Drawing.Size(75, 17);
             this.radioPaint.TabIndex = 9;
@@ -120,7 +105,7 @@
             // radioFill
             // 
             this.radioFill.AutoSize = true;
-            this.radioFill.Location = new System.Drawing.Point(520, 122);
+            this.radioFill.Location = new System.Drawing.Point(12, 122);
             this.radioFill.Name = "radioFill";
             this.radioFill.Size = new System.Drawing.Size(61, 17);
             this.radioFill.TabIndex = 10;
@@ -130,7 +115,7 @@
             // 
             // trackBot
             // 
-            this.trackBot.Location = new System.Drawing.Point(520, 379);
+            this.trackBot.Location = new System.Drawing.Point(98, 180);
             this.trackBot.Minimum = 1;
             this.trackBot.Name = "trackBot";
             this.trackBot.Size = new System.Drawing.Size(74, 45);
@@ -140,7 +125,7 @@
             // 
             // labelBot
             // 
-            this.labelBot.Location = new System.Drawing.Point(520, 360);
+            this.labelBot.Location = new System.Drawing.Point(95, 154);
             this.labelBot.Name = "labelBot";
             this.labelBot.Size = new System.Drawing.Size(75, 23);
             this.labelBot.TabIndex = 12;
@@ -149,7 +134,7 @@
             // 
             // trackMid
             // 
-            this.trackMid.Location = new System.Drawing.Point(523, 312);
+            this.trackMid.Location = new System.Drawing.Point(98, 106);
             this.trackMid.Name = "trackMid";
             this.trackMid.Size = new System.Drawing.Size(74, 45);
             this.trackMid.TabIndex = 13;
@@ -158,7 +143,7 @@
             // 
             // labelMid
             // 
-            this.labelMid.Location = new System.Drawing.Point(520, 286);
+            this.labelMid.Location = new System.Drawing.Point(95, 80);
             this.labelMid.Name = "labelMid";
             this.labelMid.Size = new System.Drawing.Size(75, 23);
             this.labelMid.TabIndex = 14;
@@ -168,7 +153,7 @@
             // 
             // trackTop
             // 
-            this.trackTop.Location = new System.Drawing.Point(519, 238);
+            this.trackTop.Location = new System.Drawing.Point(96, 41);
             this.trackTop.Name = "trackTop";
             this.trackTop.Size = new System.Drawing.Size(74, 45);
             this.trackTop.TabIndex = 15;
@@ -177,7 +162,7 @@
             // 
             // labelTop
             // 
-            this.labelTop.Location = new System.Drawing.Point(520, 212);
+            this.labelTop.Location = new System.Drawing.Point(93, 12);
             this.labelTop.Name = "labelTop";
             this.labelTop.Size = new System.Drawing.Size(75, 23);
             this.labelTop.TabIndex = 16;
@@ -187,18 +172,17 @@
             // 
             // buttonEyedropper
             // 
-            this.buttonEyedropper.Location = new System.Drawing.Point(520, 70);
+            this.buttonEyedropper.Location = new System.Drawing.Point(12, 70);
             this.buttonEyedropper.Name = "buttonEyedropper";
             this.buttonEyedropper.Size = new System.Drawing.Size(77, 23);
             this.buttonEyedropper.TabIndex = 17;
             this.buttonEyedropper.Text = "Eyedropper";
             this.buttonEyedropper.UseVisualStyleBackColor = true;
-            this.buttonEyedropper.Click += new System.EventHandler(this.buttonEyedropper_Click);
             // 
             // colorBox
             // 
             this.colorBox.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.colorBox.Location = new System.Drawing.Point(520, 12);
+            this.colorBox.Location = new System.Drawing.Point(12, 12);
             this.colorBox.Name = "colorBox";
             this.colorBox.Size = new System.Drawing.Size(75, 23);
             this.colorBox.TabIndex = 18;
@@ -206,9 +190,12 @@
             // 
             // PixelEditForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(607, 522);
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.ClientSize = new System.Drawing.Size(178, 236);
+            this.ControlBox = false;
             this.Controls.Add(this.colorBox);
             this.Controls.Add(this.buttonEyedropper);
             this.Controls.Add(this.labelTop);
@@ -223,10 +210,8 @@
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.imageBox1);
             this.Name = "PixelEditForm";
-            this.Text = "Edit Image";
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            this.Text = "Edit Pixels";
             ((System.ComponentModel.ISupportInitialize)(this.trackBot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackMid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackTop)).EndInit();
@@ -237,9 +222,9 @@
         }
 
         #endregion
-
-        private Emgu.CV.UI.ImageBox imageBox1;
+        private Emgu.CV.UI.ImageBox.FunctionalModeOption currentMode;
         private Emgu.CV.UI.ImageBox.FunctionalModeOption[] mode;
+        private System.Windows.Forms.Form parent;
         private Emgu.CV.Mat matCurrentImage;
         public Emgu.CV.Mat matOutputImage;
         private System.Windows.Forms.Button okButton;

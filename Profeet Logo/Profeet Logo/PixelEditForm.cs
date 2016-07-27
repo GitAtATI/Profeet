@@ -16,19 +16,17 @@ namespace Profeet_Logo
 {
     public partial class PixelEditForm : Form
     {
-        public PixelEditForm(Mat img)
+        public PixelEditForm(Form parent)
         {
+            this.parent = parent;
             InitializeComponent();
             updateColorBox();
-            matCurrentImage = img.Clone();
-            imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
-            mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
-                Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
-                Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
-            imageBox1.FunctionalMode = mode[0];
             mouseDrag = false;
             pickingColor = false;
             prevPt = new Point(-1, -1);
+            mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
+                Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
+                Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
         }
 
         private void colorButton_Click(object sender, EventArgs e)
@@ -46,82 +44,6 @@ namespace Profeet_Logo
             }
         }
 
-        private void imageBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (imageBox1.FunctionalMode.Equals(mode[1]))
-            {
-                disablePicking();
-                return;
-            }
-
-            Point pt = getAdjustedClick(e);
-
-            if (pickingColor)
-            {
-                Image<Bgr, Byte> i = matCurrentImage.ToImage<Bgr, Byte>();
-                int b = i.Data[pt.Y, pt.X, 0];
-                int g = i.Data[pt.Y, pt.X, 1];
-                int r = i.Data[pt.Y, pt.X, 2];
-                activeColor = new MCvScalar(b, g, r);
-                updateColorBox();
-                disablePicking();
-                return;
-            }
-
-            if (radioPaint.Checked == true)
-            {
-                //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
-                //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
-                CvInvoke.Line(matCurrentImage, pt, pt, activeColor, trackBot.Value);
-            }
-            else
-            {
-                Rectangle ccomp;
-                CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
-                    new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
-            }
-            imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
-            mouseDrag = true;
-            prevPt = pt;
-        }
-
-        private void imageBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (imageBox1.FunctionalMode.Equals(mode[1])) return;
-            mouseDrag = false;
-            prevPt = new Point(-1, -1);
-        }
-
-        private void imageBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (imageBox1.FunctionalMode.Equals(mode[1])) return;
-            if (mouseDrag)
-            {
-                Point pt = getAdjustedClick(e);
-                if (prevPt.X < 0) prevPt = pt;
-                if (radioPaint.Checked == true)
-                {
-                    CvInvoke.Line(matCurrentImage, prevPt, pt, activeColor, trackBot.Value);
-                }
-                else
-                {
-                    Rectangle ccomp;
-                    CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
-                        new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
-                }
-                imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
-                prevPt = pt;
-            }
-        }
-
-        //Alternates between no zoom/pan (paint mode) and zoom/pan mode
-        private void imgModeButton_Click(object sender, EventArgs e)
-        {
-            if (imageBox1.FunctionalMode.Equals(mode[0]))
-                imageBox1.FunctionalMode = mode[1];
-            else imageBox1.FunctionalMode = mode[0];
-        }
-
         private void okButton_Click(object sender, EventArgs e)
         {
             matOutputImage = matCurrentImage.Clone();
@@ -134,19 +56,6 @@ namespace Profeet_Logo
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
-        //Takes click on zoomed in and/or panned image
-        //Returns location of that click on the actual image, rather than the ImageBox
-        private Point getAdjustedClick(MouseEventArgs e)
-        {
-            double xOffset = imageBox1.HorizontalScrollBar.Value;
-            double yOffset = imageBox1.VerticalScrollBar.Value;
-            double zoom = imageBox1.ZoomScale;
-            int x = (int)(xOffset + (e.X / zoom));
-            int y = (int)(yOffset + (e.Y / zoom));
-            return new Point(x, y);
-        }
-
 
         private void radioPaint_CheckedChanged(object sender, EventArgs e)
         {
@@ -208,29 +117,55 @@ namespace Profeet_Logo
 
         }
 
-        private void buttonEyedropper_Click(object sender, EventArgs e)
+        //Alternates between no zoom/pan (paint mode) and zoom/pan mode
+        private void imgModeButton_Click(object sender, EventArgs e)
         {
-            enablePicking();
+            if (currentMode.Equals(mode[0]))
+                currentMode = mode[1];
+            else currentMode = mode[0];
         }
 
-        private void enablePicking()
-        {
-            pickingColor = true;
-            imageBox1.Cursor = Cursors.NoMove2D;
-        }
-
-        private void disablePicking()
-        {
-            pickingColor = false;
-            imageBox1.Cursor = Cursors.Cross;
-        }
-
-        private void updateColorBox()
+        public void updateColorBox()
         {
             Image<Bgr, Byte> i = new Image<Bgr, Byte>(75, 23);
             Rectangle ccomp;
             CvInvoke.FloodFill(i, null, new Point(0, 0), activeColor, out ccomp, new MCvScalar(0), new MCvScalar(0));
             colorBox.Image = i;
+        }
+
+        public MCvScalar getActiveColor()
+        {
+            return activeColor;
+        }
+
+        public void setActiveColor(MCvScalar newColor)
+        {
+            activeColor = newColor;
+        }
+
+        public bool getPaintChecked()
+        {
+            return radioPaint.Checked;
+        }
+
+        public int getTopVal()
+        {
+            return trackTop.Value;
+        }
+
+        public int getMidVal()
+        {
+            return trackMid.Value;
+        }
+
+        public int getBotVal()
+        {
+            return trackBot.Value;
+        }
+
+        public Emgu.CV.UI.ImageBox.FunctionalModeOption getMode()
+        {
+            return currentMode;
         }
     }
 }

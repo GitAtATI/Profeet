@@ -27,6 +27,10 @@ namespace Profeet
             InitializeComponent();
             lastClicked = new Point(-1, -1);
             colorKey = new Dictionary<Bgr, Bgr>();
+            editingPixels = false;
+            mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
+                Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
+                Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,8 +170,8 @@ namespace Profeet
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Profeet_Logo.PixelEditForm form = new Profeet_Logo.PixelEditForm(matCurrentImage);
-            DialogResult result = form.ShowDialog();
+            editForm = new Profeet_Logo.PixelEditForm(this);
+            editForm.Show();
         }
         
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -375,26 +379,6 @@ namespace Profeet
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-        /************************************************************************************************************************************/
-        private void imageBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            
-            if (inBounds(e.Location, matCurrentImage))
-            {
-                lastClicked = e.Location;
-                if (trackingColors && colorKey.Count < 3)
-                {
-                    Image<Bgr, Byte> localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
-
-                    if (!colorKey.ContainsKey(localImg[e.Y, e.X]))
-                    {
-                        Random rand = new Random();
-                        colorKey.Add(localImg[e.Y, e.X], new Bgr(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255)));
-                    }
-                }
-            }
-            
         }
 
         private static Boolean inBounds(Point p, Mat matImage)
@@ -659,8 +643,8 @@ namespace Profeet
             }
             else
             {
-                int factorX = originalImg.Width / tempImg.Width;
-                int factorY = originalImg.Height / tempImg.Height;
+                factorX = originalImg.Width / tempImg.Width;
+                factorY = originalImg.Height / tempImg.Height;
 
                 int scaledX = tempImg.Width * factorX;
                 int scaledY = tempImg.Height * factorY;
@@ -671,8 +655,163 @@ namespace Profeet
                 newImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledTempImg;
             }
 
+            matShrunkImage = tempImg.Mat;
             imageBox1.Image = newImg;
         }
 
+        private void overlayCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (overlayCheckBox.Checked)
+            {
+                overlayTrackBar.Enabled = true;
+                overlayTrackBar_Scroll(null, null);
+            }
+            else
+            {
+                overlayTrackBar.Enabled = false;
+                imageBox1.Image = tempImg;
+            }
+        }
+
+        private void imageBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            changeMode();
+
+            if (imageBox1.FunctionalMode.Equals(mode[1]))
+            {
+                disablePicking();
+                return;
+            }
+
+            Point pt = getAdjustedClick(e);
+
+            if (pickingColor)
+            {
+                Image<Bgr, Byte> i = matCurrentImage.ToImage<Bgr, Byte>();
+                int b = i.Data[pt.Y, pt.X, 0];
+                int g = i.Data[pt.Y, pt.X, 1];
+                int r = i.Data[pt.Y, pt.X, 2];
+                editForm.setActiveColor(new MCvScalar(b, g, r));
+                editForm.updateColorBox();
+                disablePicking();
+                return;
+            }
+
+            if (editForm.getPaintChecked() == true)
+            {
+                //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
+                //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
+                if (!overlayCheckBox.Checked)
+                {
+                    CvInvoke.Line(matCurrentImage, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
+                }
+                else
+                {
+                    CvInvoke.Line(matShrunkImage, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
+                }
+
+            }
+            else
+            {
+                Rectangle ccomp;
+                CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                    new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+            }
+            if (!overlayCheckBox.Checked)
+            {
+                imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
+            }
+            else
+            {
+                tempImg = matShrunkImage.ToImage<Bgr, Byte>();
+                overlayTrackBar_Scroll(null, null);
+            }
+            mouseDrag = true;
+            lastClicked = pt;
+        }
+
+        private void imageBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (imageBox1.FunctionalMode.Equals(mode[1])) return;
+            mouseDrag = false;
+            lastClicked = new Point(-1, -1);
+        }
+
+        private void imageBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (imageBox1.FunctionalMode.Equals(mode[1])) return;
+            if (mouseDrag)
+            {
+                Point pt = getAdjustedClick(e);
+                if (lastClicked.X < 0) lastClicked = pt;
+                if (editForm.getPaintChecked() == true)
+                {
+                    if (!overlayCheckBox.Checked)
+                    { 
+                        CvInvoke.Line(matCurrentImage, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
+                    }
+                    else
+                    {
+                        CvInvoke.Line(matShrunkImage, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
+                    }
+                }
+                else
+                {
+                    Rectangle ccomp;
+                    CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                        new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+                }
+                if (!overlayCheckBox.Checked)
+                {
+                    imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
+                }
+                else
+                {
+                    tempImg = matShrunkImage.ToImage<Bgr, Byte>();
+                    overlayTrackBar_Scroll(null, null);
+                }
+                lastClicked = pt;
+            }
+        }
+
+        private void enablePicking()
+        {
+            pickingColor = true;
+            imageBox1.Cursor = Cursors.NoMove2D;
+        }
+
+        private void disablePicking()
+        {
+            pickingColor = false;
+            imageBox1.Cursor = Cursors.Cross;
+        }
+
+        //Takes click on zoomed in and/or panned image
+        //Returns location of that click on the actual image, rather than the ImageBox
+        private Point getAdjustedClick(MouseEventArgs e)
+        {
+            double xOffset = imageBox1.HorizontalScrollBar.Value;
+            double yOffset = imageBox1.VerticalScrollBar.Value;
+            double zoom = imageBox1.ZoomScale;
+            int x = (int)(xOffset + (e.X / zoom));
+            int y = (int)(yOffset + (e.Y / zoom));
+
+            if (overlayCheckBox.Checked)
+            {
+                x = x / factorX;
+                y = y / factorY;
+            }
+
+            return new Point(x, y);
+        }
+
+        public void changeMode()
+        {
+            if (editForm == null)
+            {
+                return;
+            }
+            imageBox1.FunctionalMode = editForm.getMode();
+        }
     }
 }
