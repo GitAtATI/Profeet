@@ -42,9 +42,6 @@
             this.editPixelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorShiftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.watershedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steppingResizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchChecksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +51,7 @@
             this.overlayTrackBar = new System.Windows.Forms.TrackBar();
             this.overlayCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).BeginInit();
@@ -134,10 +132,8 @@
             this.editPixelsToolStripMenuItem,
             this.edgeDetectionToolStripMenuItem,
             this.resizeToolStripMenuItem,
-            this.saturationToolStripMenuItem,
-            this.colorShiftToolStripMenuItem,
-            this.watershedToolStripMenuItem,
-            this.steppingResizeToolStripMenuItem});
+            this.steppingResizeToolStripMenuItem,
+            this.debugToolStripMenuItem});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
             this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.functionsToolStripMenuItem.Text = "Functions";
@@ -170,33 +166,11 @@
             this.resizeToolStripMenuItem.Text = "Resize";
             this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
             // 
-            // saturationToolStripMenuItem
-            // 
-            this.saturationToolStripMenuItem.Name = "saturationToolStripMenuItem";
-            this.saturationToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.saturationToolStripMenuItem.Text = "Saturation";
-            this.saturationToolStripMenuItem.Click += new System.EventHandler(this.saturationToolStripMenuItem_Click);
-            // 
-            // colorShiftToolStripMenuItem
-            // 
-            this.colorShiftToolStripMenuItem.Name = "colorShiftToolStripMenuItem";
-            this.colorShiftToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.colorShiftToolStripMenuItem.Text = "Color Shift";
-            this.colorShiftToolStripMenuItem.Click += new System.EventHandler(this.colorShiftToolStripMenuItem_Click);
-            // 
-            // watershedToolStripMenuItem
-            // 
-            this.watershedToolStripMenuItem.Name = "watershedToolStripMenuItem";
-            this.watershedToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.watershedToolStripMenuItem.Text = "Watershed";
-            this.watershedToolStripMenuItem.Click += new System.EventHandler(this.watershedToolStripMenuItem_Click);
-            // 
             // steppingResizeToolStripMenuItem
             // 
             this.steppingResizeToolStripMenuItem.Name = "steppingResizeToolStripMenuItem";
             this.steppingResizeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.steppingResizeToolStripMenuItem.Text = "Stepping Resize";
-            this.steppingResizeToolStripMenuItem.Click += new System.EventHandler(this.steppingResizeToolStripMenuItem_Click);
             // 
             // stitchChecksToolStripMenuItem
             // 
@@ -274,6 +248,13 @@
             this.panel1.Size = new System.Drawing.Size(1396, 36);
             this.panel1.TabIndex = 4;
             // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.debugToolStripMenuItem.Text = "Debug";
+            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,36 +294,30 @@
         private System.Windows.Forms.ToolStripMenuItem editPixelsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem edgeDetectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saturationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem watershedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stitchChecksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorLimitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem floatStitchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stitchSimulationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem steppingResizeToolStripMenuItem;
+        private System.Windows.Forms.TrackBar overlayTrackBar;
+        private System.Windows.Forms.CheckBox overlayCheckBox;
         private Emgu.CV.UI.ImageBox imageBox1;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> originalImg;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImg;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> currentImg;
         private System.Drawing.Point lastClicked;
-        private bool trackingColors;
-        private System.Collections.Generic.Dictionary<Emgu.CV.Structure.Bgr, Emgu.CV.Structure.Bgr> colorKey;
-        private System.Windows.Forms.ToolStripMenuItem colorShiftToolStripMenuItem;
         private System.Windows.Forms.Form generalForm;
         private string origImageFile;
         private Emgu.CV.Mat matCurrentImage;
         private Emgu.CV.Mat matTempImage;
-        private Emgu.CV.Mat matShrunkImage;
+        private Emgu.CV.Mat matScaledImg;
         private Profeet_Logo.functionControls modelessForm;
-        private System.Windows.Forms.ToolStripMenuItem steppingResizeToolStripMenuItem;
-        private System.Windows.Forms.TrackBar overlayTrackBar;
-        private System.Windows.Forms.CheckBox overlayCheckBox;
         private System.Windows.Forms.Panel panel1;
         private Profeet_Logo.PixelEditForm editForm;
-        private bool editingPixels;
-        private bool pickingColor;
         private bool mouseDrag;
         public Emgu.CV.UI.ImageBox.FunctionalModeOption[] mode;
         private int factorX;
         private int factorY;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
     }
 }

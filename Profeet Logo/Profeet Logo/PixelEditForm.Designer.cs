@@ -87,6 +87,7 @@
             this.imgModeButton.TabIndex = 7;
             this.imgModeButton.Text = "Mode";
             this.imgModeButton.UseVisualStyleBackColor = true;
+            this.imgModeButton.Click += new System.EventHandler(this.imgModeButton_Click);
             // 
             // radioPaint
             // 
@@ -178,6 +179,7 @@
             this.buttonEyedropper.TabIndex = 17;
             this.buttonEyedropper.Text = "Eyedropper";
             this.buttonEyedropper.UseVisualStyleBackColor = true;
+            this.buttonEyedropper.Click += new System.EventHandler(this.buttonEyedropper_Click);
             // 
             // colorBox
             // 
@@ -225,14 +227,11 @@
         private Emgu.CV.UI.ImageBox.FunctionalModeOption currentMode;
         private Emgu.CV.UI.ImageBox.FunctionalModeOption[] mode;
         private System.Windows.Forms.Form parent;
-        private Emgu.CV.Mat matCurrentImage;
-        public Emgu.CV.Mat matOutputImage;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button colorButton;
         private Emgu.CV.Structure.MCvScalar activeColor;
-        private bool mouseDrag;
-        private bool pickingColor;
+        public bool pickingColor;
         private System.Drawing.Point prevPt;
         private System.Windows.Forms.Button imgModeButton;
         private System.Windows.Forms.RadioButton radioPaint;

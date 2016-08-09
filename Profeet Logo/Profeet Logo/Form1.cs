@@ -26,8 +26,6 @@ namespace Profeet
         {
             InitializeComponent();
             lastClicked = new Point(-1, -1);
-            colorKey = new Dictionary<Bgr, Bgr>();
-            editingPixels = false;
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
@@ -170,8 +168,16 @@ namespace Profeet
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            imageBox1.FunctionalMode = mode[0];
             editForm = new Profeet_Logo.PixelEditForm(this);
+            editForm.FormClosed += new FormClosedEventHandler(editPixelsClosed);
             editForm.Show();
+        }
+
+        private void editPixelsClosed(object sender, FormClosedEventArgs e)
+        {
+            imageBox1.FunctionalMode = mode[1];
+            editForm = null;
         }
         
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -222,90 +228,7 @@ namespace Profeet
             imageBox1.Image = currentImg;
 
         }
-
-        private void saturationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            modelessForm = new Profeet_Logo.functionControls(currentImg);
-
-            //Generate labels and trackbars
-            //Create a new label and text box
-            Label labelThreshold = new Label();
-            TrackBar trackbarThreshold = new TrackBar();
-
-            //Initialize label's property
-            labelThreshold.Text = "Threshold";
-            labelThreshold.Location = new Point(30, 10);
-            labelThreshold.AutoSize = true;
-
-            //Initialize textBoxes Property
-            trackbarThreshold.Name = "Threshold";
-            trackbarThreshold.Location = new Point(50, 30);
-            trackbarThreshold.Minimum = 0;
-            trackbarThreshold.Maximum = 100;
-
-            trackbarThreshold.Scroll += (object confirmsender, EventArgs confirmE) => { modelessForm.imageFunction(); };
-
-            //Add the labels and text box to the form
-            modelessForm.Controls.Add(labelThreshold);
-            modelessForm.Controls.Add(trackbarThreshold);
-            modelessForm.imageFunction = new AddImageDelegate(this.saturation);
-            //Hide the Apply button
-            Button btnApply = (Button)modelessForm.Controls["Apply"];
-            btnApply.Visible = false;
-
-            generalForm = modelessForm;
-            tempImg = currentImg.Copy();
-
-            modelessForm.Show();
-        }
-
-        private void colorShiftToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!trackingColors)
-            {
-                trackingColors = true;
-                Console.WriteLine("Tracking colors");
-            }
-            else if (colorKey.Count == 3)
-            {
-                for (int y = 0; y < currentImg.Rows; y++)
-                {
-                    for (int x = 0; x < currentImg.Cols; x++)
-                    {
-                        foreach (KeyValuePair<Bgr, Bgr> pair in colorKey)
-                        {
-                            if (currentImg[y, x].Equals(pair.Key))
-                            {
-                                currentImg[y, x] = pair.Value;
-                            }
-                        }
-                    }
-                }
-                trackingColors = false;
-                imageBox1.Image = currentImg;
-            }
-        }
-
-        private void watershedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Profeet_Logo.functionControls form = new Profeet_Logo.functionControls(currentImg);
-            DialogResult result = form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                imageBox1.Image = form.outputImg;
-                Console.WriteLine("OK");
-            }
-            else if (result == DialogResult.Cancel)
-            {
-                Console.WriteLine("Cancel");
-            }
-        }
-
-        private void steppingResizeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //resize
@@ -398,7 +321,7 @@ namespace Profeet
             txtbx = (TextBox)generalForm.Controls["textHeight"];
             int height = Convert.ToInt32(txtbx.Text);
 
-            tempImg = tempImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Area, true);
+            tempImg = tempImg.Resize(width, height, Emgu.CV.CvEnum.Inter.Area, false);
             imageBox1.Image = tempImg;
         }
 
@@ -426,15 +349,14 @@ namespace Profeet
             int combineColor;
             Bgr color = new Bgr();
             int[] colorArray = new int[1000];
-            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImage;
-            tempImage = currentImg;
-            Size imageSize = tempImage.Size;
+            tempImg = currentImg.Copy();
+            Size imageSize = tempImg.Size;
             for (heightIndex = 0; heightIndex < imageSize.Width; heightIndex++)
             {
                 lastIndex = 1;
                 for (widthIndex = 0; widthIndex < imageSize.Height; widthIndex++)
                 {
-                    color = tempImage[widthIndex, heightIndex];
+                    color = tempImg[widthIndex, heightIndex];
                     combineColor = (int)color.Red << 16;
                     combineColor |= (int)color.Green << 8;
                     combineColor |= (int)color.Blue;
@@ -462,7 +384,7 @@ namespace Profeet
                     color.Red = 255;
                     color.Green = 0;
 
-                    tempImage.Draw(line, color, 1);
+                    tempImg.Draw(line, color, 1);
                 }
                 for (colorArrayIndex = 0; colorArrayIndex < lastIndex; colorArrayIndex++)
                 {
@@ -473,7 +395,8 @@ namespace Profeet
 
 
             }
-            imageBox1.Image = tempImage;
+            currentImg = tempImg.Copy();
+            imageBox1.Image = currentImg;
 
         }
         private void floatStitch()
@@ -486,16 +409,15 @@ namespace Profeet
             int combineColor, lastCombineColor = 0, combineColorCounter = 0;
             Bgr color = new Bgr();
             int[] colorArray = new int[1000];
-            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImage;
-            tempImage = currentImg;
-            Size imageSize = tempImage.Size;
+            tempImg = currentImg.Copy();
+            Size imageSize = tempImg.Size;
             for (heightIndex = 0; heightIndex < imageSize.Width; heightIndex++)
             {
                 lastCombineColor = 0;
                 combineColorCounter = 0;
                 for (widthIndex = 0; widthIndex < imageSize.Height; widthIndex++)
                 {
-                    color = tempImage[widthIndex, heightIndex];
+                    color = tempImg[widthIndex, heightIndex];
                     combineColor = (int)color.Red << 16;
                     combineColor |= (int)color.Green << 8;
                     combineColor |= (int)color.Blue;
@@ -514,7 +436,7 @@ namespace Profeet
                             color.Green = 0;
 
                             combineColorCounter = 0;
-                            tempImage.Draw(line, color, 1);
+                            tempImg.Draw(line, color, 1);
                         }
 
                     }
@@ -550,22 +472,11 @@ namespace Profeet
 
 
             }
-            imageBox1.Image = tempImage;
+            currentImg = tempImg.Copy();
+            imageBox1.Image = currentImg;
 
         }
-        private void waterShed()
-        {
-            //  Mat markerMask, img, imgGray;
-            //   img = currentImg.Mat;
-            //   markerMask = img;
-            //   imgGray = markerMask;
 
-            //    CvInvoke.CvtColor(img, markerMask, ColorConversion.Bgr2Gray);
-            //    CvInvoke.CvtColor(markerMask, imgGray, ColorConversion.Gray2Bgr);
-
-            //markerMask =MCvScalar(0, 0, 0);
-
-        }
         private void colorReduction()
         {
 
@@ -611,22 +522,10 @@ namespace Profeet
                     i++;
                 }
             }
-
-            imageBox1.Image = tempImg;
+            currentImg = tempImg.Copy();
+            imageBox1.Image = currentImg;
         }
-
-        private void saturation()
-        {
-            TrackBar trackbarThreshold = (TrackBar)generalForm.Controls["Threshold"];
-            double threshold = Convert.ToDouble(trackbarThreshold.Value);
-
-            Rectangle ccomp;
-            CvInvoke.FloodFill(tempImg, null, lastClicked,
-                new MCvScalar(threshold, threshold, threshold), out ccomp, new MCvScalar(20),
-                new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
-            imageBox1.Image = tempImg;
-        }
-
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
             imageBox1.Size = new System.Drawing.Size(this.Size.Width - 15, this.Size.Height - 120);
@@ -636,27 +535,27 @@ namespace Profeet
         {
             double threshold = Convert.ToDouble(overlayTrackBar.Value) / 100;
 
-            Image<Bgr, byte> newImg;
-            if (originalImg.Size.Equals(tempImg.Size))
+            Image<Bgr, byte> scaledImg;
+            if (originalImg.Size.Equals(currentImg.Size))
             {
-                newImg = (1.0 - threshold) * originalImg + threshold * tempImg;
+                scaledImg = (1.0 - threshold) * originalImg + threshold * currentImg;
             }
             else
             {
-                factorX = originalImg.Width / tempImg.Width;
-                factorY = originalImg.Height / tempImg.Height;
+                factorX = originalImg.Width / currentImg.Width;
+                factorY = originalImg.Height / currentImg.Height;
 
-                int scaledX = tempImg.Width * factorX;
-                int scaledY = tempImg.Height * factorY;
+                int scaledX = currentImg.Width * factorX;
+                int scaledY = currentImg.Height * factorY;
 
                 Image<Bgr, byte> scaledOriginalImg = originalImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
-                Image<Bgr, byte> scaledTempImg = tempImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
+                Image<Bgr, byte> scaledCurrentImg = currentImg.Resize(scaledX, scaledY, Emgu.CV.CvEnum.Inter.Area, false);
 
-                newImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledTempImg;
+                scaledImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledCurrentImg;
             }
 
-            matShrunkImage = tempImg.Mat;
-            imageBox1.Image = newImg;
+            matScaledImg = currentImg.Mat;
+            imageBox1.Image = scaledImg;
         }
 
         private void overlayCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -675,17 +574,19 @@ namespace Profeet
 
         private void imageBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            changeMode();
-
-            if (imageBox1.FunctionalMode.Equals(mode[1]))
+            //Don't do anything if there is no edit form
+            //Don't do anything if the image box is set to pan and zoom
+            if (editForm == null || imageBox1.FunctionalMode.Equals(mode[1]))
             {
-                disablePicking();
                 return;
             }
 
+            //Update image box mode
+            imageBox1.FunctionalMode = editForm.getMode();
+
             Point pt = getAdjustedClick(e);
 
-            if (pickingColor)
+            if (editForm.pickingColor)
             {
                 Image<Bgr, Byte> i = matCurrentImage.ToImage<Bgr, Byte>();
                 int b = i.Data[pt.Y, pt.X, 0];
@@ -693,10 +594,11 @@ namespace Profeet
                 int r = i.Data[pt.Y, pt.X, 2];
                 editForm.setActiveColor(new MCvScalar(b, g, r));
                 editForm.updateColorBox();
-                disablePicking();
+                editForm.buttonEyedropper_Click(null, null);
                 return;
             }
 
+            //Paint
             if (editForm.getPaintChecked() == true)
             {
                 //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
@@ -707,25 +609,30 @@ namespace Profeet
                 }
                 else
                 {
-                    CvInvoke.Line(matShrunkImage, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
+                    CvInvoke.Line(matScaledImg, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
                 }
 
             }
+            //Fill
             else
             {
                 Rectangle ccomp;
                 CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
                     new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
             }
+
             if (!overlayCheckBox.Checked)
             {
-                imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
+                currentImg = matCurrentImage.ToImage<Bgr, Byte>();
+                imageBox1.Image = currentImg;
             }
             else
             {
-                tempImg = matShrunkImage.ToImage<Bgr, Byte>();
+                currentImg = matScaledImg.ToImage<Bgr, Byte>();
+                imageBox1.Image = currentImg;
                 overlayTrackBar_Scroll(null, null);
             }
+
             mouseDrag = true;
             lastClicked = pt;
         }
@@ -752,7 +659,7 @@ namespace Profeet
                     }
                     else
                     {
-                        CvInvoke.Line(matShrunkImage, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
+                        CvInvoke.Line(matScaledImg, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
                     }
                 }
                 else
@@ -767,25 +674,13 @@ namespace Profeet
                 }
                 else
                 {
-                    tempImg = matShrunkImage.ToImage<Bgr, Byte>();
+                    tempImg = matScaledImg.ToImage<Bgr, Byte>();
                     overlayTrackBar_Scroll(null, null);
                 }
                 lastClicked = pt;
             }
         }
-
-        private void enablePicking()
-        {
-            pickingColor = true;
-            imageBox1.Cursor = Cursors.NoMove2D;
-        }
-
-        private void disablePicking()
-        {
-            pickingColor = false;
-            imageBox1.Cursor = Cursors.Cross;
-        }
-
+        
         //Takes click on zoomed in and/or panned image
         //Returns location of that click on the actual image, rather than the ImageBox
         private Point getAdjustedClick(MouseEventArgs e)
@@ -804,14 +699,11 @@ namespace Profeet
 
             return new Point(x, y);
         }
-
-        public void changeMode()
+        
+        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (editForm == null)
-            {
-                return;
-            }
-            imageBox1.FunctionalMode = editForm.getMode();
+            Console.Write("Test: ");
+            Console.WriteLine(editForm == null);
         }
     }
 }

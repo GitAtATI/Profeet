@@ -21,7 +21,6 @@ namespace Profeet_Logo
             this.parent = parent;
             InitializeComponent();
             updateColorBox();
-            mouseDrag = false;
             pickingColor = false;
             prevPt = new Point(-1, -1);
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
@@ -44,9 +43,22 @@ namespace Profeet_Logo
             }
         }
 
+        public void buttonEyedropper_Click(object sender, EventArgs e)
+        {
+            if (!pickingColor)
+            {
+                pickingColor = true;
+                buttonEyedropper.Enabled = false;
+            }
+            else
+            {
+                pickingColor = false;
+                buttonEyedropper.Enabled = true;
+            }
+        }
+
         private void okButton_Click(object sender, EventArgs e)
         {
-            matOutputImage = matCurrentImage.Clone();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -121,8 +133,13 @@ namespace Profeet_Logo
         private void imgModeButton_Click(object sender, EventArgs e)
         {
             if (currentMode.Equals(mode[0]))
+            {
                 currentMode = mode[1];
-            else currentMode = mode[0];
+            }
+            else
+            {
+                currentMode = mode[0];
+            }
         }
 
         public void updateColorBox()
