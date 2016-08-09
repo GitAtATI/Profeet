@@ -562,13 +562,45 @@ namespace Profeet
         {
             if (overlayCheckBox.Checked)
             {
-                overlayTrackBar.Enabled = true;
-                overlayTrackBar_Scroll(null, null);
+                radioZero.Enabled = true;
+                radioHundred.Enabled = true;
+                radioCustom.Enabled = true;
+                radioZero.Checked = true;
+                radioZero_CheckedChanged(null, null);
             }
             else
             {
-                overlayTrackBar.Enabled = false;
-                imageBox1.Image = tempImg;
+                radioZero.Enabled = false;
+                radioHundred.Enabled = false;
+                radioCustom.Enabled = false;
+                imageBox1.Image = currentImg;
+            }
+        }
+
+        private void radioZero_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioZero.Checked == true)
+            {
+                overlayTrackBar.Value = 0;
+                overlayTrackBar_Scroll(null, null);
+            }
+        }
+
+        private void radioHundred_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioHundred.Checked == true)
+            {
+                overlayTrackBar.Value = 100;
+                overlayTrackBar_Scroll(null, null);
+            }
+        }
+
+        private void radioCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioCustom.Checked == true)
+            {
+                overlayTrackBar.Enabled = true;
+                overlayTrackBar_Scroll(null, null);
             }
         }
 

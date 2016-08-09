@@ -43,6 +43,7 @@
             this.edgeDetectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steppingResizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchChecksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorLimitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floatStitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,9 @@
             this.overlayTrackBar = new System.Windows.Forms.TrackBar();
             this.overlayCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.radioCustom = new System.Windows.Forms.RadioButton();
+            this.radioHundred = new System.Windows.Forms.RadioButton();
+            this.radioZero = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).BeginInit();
@@ -172,6 +175,13 @@
             this.steppingResizeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.steppingResizeToolStripMenuItem.Text = "Stepping Resize";
             // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.debugToolStripMenuItem.Text = "Debug";
+            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            // 
             // stitchChecksToolStripMenuItem
             // 
             this.stitchChecksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -218,10 +228,10 @@
             // 
             this.overlayTrackBar.Dock = System.Windows.Forms.DockStyle.Right;
             this.overlayTrackBar.Enabled = false;
-            this.overlayTrackBar.Location = new System.Drawing.Point(68, 0);
+            this.overlayTrackBar.Location = new System.Drawing.Point(238, 0);
             this.overlayTrackBar.Maximum = 100;
             this.overlayTrackBar.Name = "overlayTrackBar";
-            this.overlayTrackBar.Size = new System.Drawing.Size(1328, 36);
+            this.overlayTrackBar.Size = new System.Drawing.Size(1158, 36);
             this.overlayTrackBar.TabIndex = 4;
             this.overlayTrackBar.Value = 100;
             this.overlayTrackBar.Scroll += new System.EventHandler(this.overlayTrackBar_Scroll);
@@ -240,6 +250,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.radioCustom);
+            this.panel1.Controls.Add(this.radioHundred);
+            this.panel1.Controls.Add(this.radioZero);
             this.panel1.Controls.Add(this.overlayCheckBox);
             this.panel1.Controls.Add(this.overlayTrackBar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -248,12 +261,44 @@
             this.panel1.Size = new System.Drawing.Size(1396, 36);
             this.panel1.TabIndex = 4;
             // 
-            // debugToolStripMenuItem
+            // radioCustom
             // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.debugToolStripMenuItem.Text = "Debug";
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            this.radioCustom.AutoSize = true;
+            this.radioCustom.Enabled = false;
+            this.radioCustom.Location = new System.Drawing.Point(172, 9);
+            this.radioCustom.Name = "radioCustom";
+            this.radioCustom.Size = new System.Drawing.Size(60, 17);
+            this.radioCustom.TabIndex = 8;
+            this.radioCustom.TabStop = true;
+            this.radioCustom.Text = "Custom";
+            this.radioCustom.UseVisualStyleBackColor = true;
+            this.radioCustom.CheckedChanged += new System.EventHandler(this.radioCustom_CheckedChanged);
+            // 
+            // radioHundred
+            // 
+            this.radioHundred.AutoSize = true;
+            this.radioHundred.Enabled = false;
+            this.radioHundred.Location = new System.Drawing.Point(114, 9);
+            this.radioHundred.Name = "radioHundred";
+            this.radioHundred.Size = new System.Drawing.Size(51, 17);
+            this.radioHundred.TabIndex = 7;
+            this.radioHundred.TabStop = true;
+            this.radioHundred.Text = "100%";
+            this.radioHundred.UseVisualStyleBackColor = true;
+            this.radioHundred.CheckedChanged += new System.EventHandler(this.radioHundred_CheckedChanged);
+            // 
+            // radioZero
+            // 
+            this.radioZero.AutoSize = true;
+            this.radioZero.Enabled = false;
+            this.radioZero.Location = new System.Drawing.Point(68, 9);
+            this.radioZero.Name = "radioZero";
+            this.radioZero.Size = new System.Drawing.Size(39, 17);
+            this.radioZero.TabIndex = 6;
+            this.radioZero.TabStop = true;
+            this.radioZero.Text = "0%";
+            this.radioZero.UseVisualStyleBackColor = true;
+            this.radioZero.CheckedChanged += new System.EventHandler(this.radioZero_CheckedChanged);
             // 
             // Form1
             // 
@@ -319,5 +364,8 @@
         private int factorX;
         private int factorY;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radioCustom;
+        private System.Windows.Forms.RadioButton radioHundred;
+        private System.Windows.Forms.RadioButton radioZero;
     }
 }
