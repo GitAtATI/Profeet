@@ -23,9 +23,6 @@ namespace Profeet_Logo
             updateColorBox();
             pickingColor = false;
             prevPt = new Point(-1, -1);
-            mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
-                Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
-                Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
         }
 
         private void colorButton_Click(object sender, EventArgs e)
@@ -128,20 +125,7 @@ namespace Profeet_Logo
         {
 
         }
-
-        //Alternates between no zoom/pan (paint mode) and zoom/pan mode
-        private void imgModeButton_Click(object sender, EventArgs e)
-        {
-            if (currentMode.Equals(mode[0]))
-            {
-                currentMode = mode[1];
-            }
-            else
-            {
-                currentMode = mode[0];
-            }
-        }
-
+        
         public void updateColorBox()
         {
             Image<Bgr, Byte> i = new Image<Bgr, Byte>(75, 23);
@@ -178,11 +162,6 @@ namespace Profeet_Logo
         public int getBotVal()
         {
             return trackBot.Value;
-        }
-
-        public Emgu.CV.UI.ImageBox.FunctionalModeOption getMode()
-        {
-            return currentMode;
         }
     }
 }

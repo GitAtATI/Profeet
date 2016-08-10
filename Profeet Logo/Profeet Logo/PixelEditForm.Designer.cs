@@ -32,7 +32,6 @@
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorButton = new System.Windows.Forms.Button();
-            this.imgModeButton = new System.Windows.Forms.Button();
             this.radioPaint = new System.Windows.Forms.RadioButton();
             this.radioFill = new System.Windows.Forms.RadioButton();
             this.trackBot = new System.Windows.Forms.TrackBar();
@@ -78,16 +77,6 @@
             this.colorButton.Text = "Color";
             this.colorButton.UseVisualStyleBackColor = true;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
-            // 
-            // imgModeButton
-            // 
-            this.imgModeButton.Location = new System.Drawing.Point(12, 145);
-            this.imgModeButton.Name = "imgModeButton";
-            this.imgModeButton.Size = new System.Drawing.Size(75, 23);
-            this.imgModeButton.TabIndex = 7;
-            this.imgModeButton.Text = "Mode";
-            this.imgModeButton.UseVisualStyleBackColor = true;
-            this.imgModeButton.Click += new System.EventHandler(this.imgModeButton_Click);
             // 
             // radioPaint
             // 
@@ -208,7 +197,6 @@
             this.Controls.Add(this.trackBot);
             this.Controls.Add(this.radioFill);
             this.Controls.Add(this.radioPaint);
-            this.Controls.Add(this.imgModeButton);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
@@ -224,8 +212,6 @@
         }
 
         #endregion
-        private Emgu.CV.UI.ImageBox.FunctionalModeOption currentMode;
-        private Emgu.CV.UI.ImageBox.FunctionalModeOption[] mode;
         private System.Windows.Forms.Form parent;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
@@ -233,7 +219,6 @@
         private Emgu.CV.Structure.MCvScalar activeColor;
         public bool pickingColor;
         private System.Drawing.Point prevPt;
-        private System.Windows.Forms.Button imgModeButton;
         private System.Windows.Forms.RadioButton radioPaint;
         private System.Windows.Forms.RadioButton radioFill;
         private System.Windows.Forms.TrackBar trackBot;

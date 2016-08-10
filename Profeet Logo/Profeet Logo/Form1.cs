@@ -168,7 +168,7 @@ namespace Profeet
 
         private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            imageBox1.FunctionalMode = mode[0];
+            disablePan();
             editForm = new Profeet_Logo.PixelEditForm(this);
             editForm.FormClosed += new FormClosedEventHandler(editPixelsClosed);
             editForm.Show();
@@ -176,7 +176,7 @@ namespace Profeet
 
         private void editPixelsClosed(object sender, FormClosedEventArgs e)
         {
-            imageBox1.FunctionalMode = mode[1];
+            enablePan();
             editForm = null;
         }
         
@@ -533,6 +533,13 @@ namespace Profeet
 
         private void overlayTrackBar_Scroll(object sender, EventArgs e)
         {
+            Console.WriteLine(overlayTrackBar.Value);
+            
+            if (overlayTrackBar.Value != 0 && overlayTrackBar.Value != 100)
+            {
+                radioCustom.Checked = true;
+            }
+
             double threshold = Convert.ToDouble(overlayTrackBar.Value) / 100;
 
             Image<Bgr, byte> scaledImg;
@@ -562,6 +569,7 @@ namespace Profeet
         {
             if (overlayCheckBox.Checked)
             {
+                overlayTrackBar.Enabled = true;
                 radioZero.Enabled = true;
                 radioHundred.Enabled = true;
                 radioCustom.Enabled = true;
@@ -570,6 +578,7 @@ namespace Profeet
             }
             else
             {
+                overlayTrackBar.Enabled = false;
                 radioZero.Enabled = false;
                 radioHundred.Enabled = false;
                 radioCustom.Enabled = false;
@@ -599,7 +608,6 @@ namespace Profeet
         {
             if (radioCustom.Checked == true)
             {
-                overlayTrackBar.Enabled = true;
                 overlayTrackBar_Scroll(null, null);
             }
         }
@@ -612,10 +620,7 @@ namespace Profeet
             {
                 return;
             }
-
-            //Update image box mode
-            imageBox1.FunctionalMode = editForm.getMode();
-
+            
             Point pt = getAdjustedClick(e);
 
             if (editForm.pickingColor)
@@ -736,6 +741,30 @@ namespace Profeet
         {
             Console.Write("Test: ");
             Console.WriteLine(editForm == null);
+        }
+
+        private void checkFunctionalMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkFunctionalMode.Checked)
+            {
+                enablePan();
+            }
+            else
+            {
+                disablePan();
+            }
+        }
+
+        private void enablePan()
+        {
+            imageBox1.FunctionalMode = mode[1];
+            checkFunctionalMode.Checked = true;
+        }
+
+        private void disablePan()
+        {
+            imageBox1.FunctionalMode = mode[0];
+            checkFunctionalMode.Checked = false;
         }
     }
 }

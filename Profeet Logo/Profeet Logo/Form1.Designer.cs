@@ -55,10 +55,13 @@
             this.radioCustom = new System.Windows.Forms.RadioButton();
             this.radioHundred = new System.Windows.Forms.RadioButton();
             this.radioZero = new System.Windows.Forms.RadioButton();
+            this.overlayPanel = new System.Windows.Forms.Panel();
+            this.checkFunctionalMode = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).BeginInit();
             this.panel1.SuspendLayout();
+            this.overlayPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -217,7 +220,7 @@
             // 
             this.imageBox1.Location = new System.Drawing.Point(0, 27);
             this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(1396, 444);
+            this.imageBox1.Size = new System.Drawing.Size(1396, 447);
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             this.imageBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseDown);
@@ -231,7 +234,7 @@
             this.overlayTrackBar.Location = new System.Drawing.Point(238, 0);
             this.overlayTrackBar.Maximum = 100;
             this.overlayTrackBar.Name = "overlayTrackBar";
-            this.overlayTrackBar.Size = new System.Drawing.Size(1158, 36);
+            this.overlayTrackBar.Size = new System.Drawing.Size(596, 30);
             this.overlayTrackBar.TabIndex = 4;
             this.overlayTrackBar.Value = 100;
             this.overlayTrackBar.Scroll += new System.EventHandler(this.overlayTrackBar_Scroll);
@@ -239,10 +242,9 @@
             // overlayCheckBox
             // 
             this.overlayCheckBox.AutoSize = true;
-            this.overlayCheckBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.overlayCheckBox.Location = new System.Drawing.Point(0, 0);
+            this.overlayCheckBox.Location = new System.Drawing.Point(9, 10);
             this.overlayCheckBox.Name = "overlayCheckBox";
-            this.overlayCheckBox.Size = new System.Drawing.Size(62, 36);
+            this.overlayCheckBox.Size = new System.Drawing.Size(62, 17);
             this.overlayCheckBox.TabIndex = 5;
             this.overlayCheckBox.Text = "Overlay";
             this.overlayCheckBox.UseVisualStyleBackColor = true;
@@ -250,11 +252,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.radioCustom);
-            this.panel1.Controls.Add(this.radioHundred);
-            this.panel1.Controls.Add(this.radioZero);
-            this.panel1.Controls.Add(this.overlayCheckBox);
-            this.panel1.Controls.Add(this.overlayTrackBar);
+            this.panel1.Controls.Add(this.checkFunctionalMode);
+            this.panel1.Controls.Add(this.overlayPanel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 477);
             this.panel1.Name = "panel1";
@@ -265,7 +264,7 @@
             // 
             this.radioCustom.AutoSize = true;
             this.radioCustom.Enabled = false;
-            this.radioCustom.Location = new System.Drawing.Point(172, 9);
+            this.radioCustom.Location = new System.Drawing.Point(179, 9);
             this.radioCustom.Name = "radioCustom";
             this.radioCustom.Size = new System.Drawing.Size(60, 17);
             this.radioCustom.TabIndex = 8;
@@ -278,7 +277,7 @@
             // 
             this.radioHundred.AutoSize = true;
             this.radioHundred.Enabled = false;
-            this.radioHundred.Location = new System.Drawing.Point(114, 9);
+            this.radioHundred.Location = new System.Drawing.Point(122, 9);
             this.radioHundred.Name = "radioHundred";
             this.radioHundred.Size = new System.Drawing.Size(51, 17);
             this.radioHundred.TabIndex = 7;
@@ -291,7 +290,7 @@
             // 
             this.radioZero.AutoSize = true;
             this.radioZero.Enabled = false;
-            this.radioZero.Location = new System.Drawing.Point(68, 9);
+            this.radioZero.Location = new System.Drawing.Point(77, 9);
             this.radioZero.Name = "radioZero";
             this.radioZero.Size = new System.Drawing.Size(39, 17);
             this.radioZero.TabIndex = 6;
@@ -299,6 +298,31 @@
             this.radioZero.Text = "0%";
             this.radioZero.UseVisualStyleBackColor = true;
             this.radioZero.CheckedChanged += new System.EventHandler(this.radioZero_CheckedChanged);
+            // 
+            // overlayPanel
+            // 
+            this.overlayPanel.Controls.Add(this.overlayTrackBar);
+            this.overlayPanel.Controls.Add(this.overlayCheckBox);
+            this.overlayPanel.Controls.Add(this.radioCustom);
+            this.overlayPanel.Controls.Add(this.radioZero);
+            this.overlayPanel.Controls.Add(this.radioHundred);
+            this.overlayPanel.Location = new System.Drawing.Point(3, 3);
+            this.overlayPanel.Name = "overlayPanel";
+            this.overlayPanel.Size = new System.Drawing.Size(834, 30);
+            this.overlayPanel.TabIndex = 0;
+            // 
+            // checkFunctionalMode
+            // 
+            this.checkFunctionalMode.AutoSize = true;
+            this.checkFunctionalMode.Checked = true;
+            this.checkFunctionalMode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkFunctionalMode.Location = new System.Drawing.Point(1297, 12);
+            this.checkFunctionalMode.Name = "checkFunctionalMode";
+            this.checkFunctionalMode.Size = new System.Drawing.Size(96, 17);
+            this.checkFunctionalMode.TabIndex = 5;
+            this.checkFunctionalMode.Text = "Pan and Zoom";
+            this.checkFunctionalMode.UseVisualStyleBackColor = true;
+            this.checkFunctionalMode.CheckedChanged += new System.EventHandler(this.checkFunctionalMode_CheckedChanged);
             // 
             // Form1
             // 
@@ -319,6 +343,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.overlayPanel.ResumeLayout(false);
+            this.overlayPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,5 +393,7 @@
         private System.Windows.Forms.RadioButton radioCustom;
         private System.Windows.Forms.RadioButton radioHundred;
         private System.Windows.Forms.RadioButton radioZero;
+        private System.Windows.Forms.Panel overlayPanel;
+        private System.Windows.Forms.CheckBox checkFunctionalMode;
     }
 }
