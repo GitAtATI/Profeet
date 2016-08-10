@@ -625,7 +625,15 @@ namespace Profeet
 
             if (editForm.pickingColor)
             {
-                Image<Bgr, Byte> i = matCurrentImage.ToImage<Bgr, Byte>();
+                Image<Bgr, Byte> i;
+                if (!overlayCheckBox.Checked)
+                {
+                    i = matCurrentImage.ToImage<Bgr, Byte>();
+                }
+                else
+                {
+                    i = matScaledImg.ToImage<Bgr, Byte>();
+                }
                 int b = i.Data[pt.Y, pt.X, 0];
                 int g = i.Data[pt.Y, pt.X, 1];
                 int r = i.Data[pt.Y, pt.X, 2];
@@ -654,8 +662,16 @@ namespace Profeet
             else
             {
                 Rectangle ccomp;
-                CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
-                    new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+                if (!overlayCheckBox.Checked)
+                {
+                    CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                        new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+                }
+                else
+                {
+                    CvInvoke.FloodFill(matScaledImg, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                        new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
+                }
             }
 
             if (!overlayCheckBox.Checked)
