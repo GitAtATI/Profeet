@@ -44,6 +44,7 @@ namespace Profeet
                 matCurrentImage = new Mat(Openfile.FileName, Emgu.CV.CvEnum.LoadImageType.Color);
                 imageBox1.Image = matCurrentImage;
             }
+            overlayCheckBox.Enabled = true;
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -165,20 +166,6 @@ namespace Profeet
             imageBox1.Image = currentImg;
 
         }
-
-        private void editPixelsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            disablePan();
-            editForm = new Profeet_Logo.PixelEditForm(this);
-            editForm.FormClosed += new FormClosedEventHandler(editPixelsClosed);
-            editForm.Show();
-        }
-
-        private void editPixelsClosed(object sender, FormClosedEventArgs e)
-        {
-            enablePan();
-            editForm = null;
-        }
         
         private void resizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -229,6 +216,11 @@ namespace Profeet
 
         }
         
+        private void steppingResizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //resize
@@ -616,14 +608,14 @@ namespace Profeet
         {
             //Don't do anything if there is no edit form
             //Don't do anything if the image box is set to pan and zoom
-            if (editForm == null || imageBox1.FunctionalMode.Equals(mode[1]))
+            if (!checkEditing.Checked || imageBox1.FunctionalMode.Equals(mode[1]))
             {
                 return;
             }
             
             Point pt = getAdjustedClick(e);
 
-            if (editForm.pickingColor)
+            if (pickingColor)
             {
                 Image<Bgr, Byte> i;
                 if (!overlayCheckBox.Checked)
@@ -637,24 +629,24 @@ namespace Profeet
                 int b = i.Data[pt.Y, pt.X, 0];
                 int g = i.Data[pt.Y, pt.X, 1];
                 int r = i.Data[pt.Y, pt.X, 2];
-                editForm.setActiveColor(new MCvScalar(b, g, r));
-                editForm.updateColorBox();
-                editForm.buttonEyedropper_Click(null, null);
+                activeColor = new MCvScalar(b, g, r);
+                updateColorBox();
+                buttonEyedropper_Click(null, null);
                 return;
             }
 
             //Paint
-            if (editForm.getPaintChecked() == true)
+            if (radioPaint.Checked)
             {
                 //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
                 //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
                 if (!overlayCheckBox.Checked)
                 {
-                    CvInvoke.Line(matCurrentImage, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
+                    CvInvoke.Line(matCurrentImage, pt, pt, activeColor, trackBar3.Value);
                 }
                 else
                 {
-                    CvInvoke.Line(matScaledImg, pt, pt, editForm.getActiveColor(), editForm.getBotVal());
+                    CvInvoke.Line(matScaledImg, pt, pt, activeColor, trackBar3.Value);
                 }
 
             }
@@ -664,12 +656,12 @@ namespace Profeet
                 Rectangle ccomp;
                 if (!overlayCheckBox.Checked)
                 {
-                    CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
                 else
                 {
-                    CvInvoke.FloodFill(matScaledImg, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(matScaledImg, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
             }
@@ -704,21 +696,21 @@ namespace Profeet
             {
                 Point pt = getAdjustedClick(e);
                 if (lastClicked.X < 0) lastClicked = pt;
-                if (editForm.getPaintChecked() == true)
+                if (radioPaint.Checked)
                 {
                     if (!overlayCheckBox.Checked)
                     { 
-                        CvInvoke.Line(matCurrentImage, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
+                        CvInvoke.Line(matCurrentImage, lastClicked, pt, activeColor, trackBar3.Value);
                     }
                     else
                     {
-                        CvInvoke.Line(matScaledImg, lastClicked, pt, editForm.getActiveColor(), editForm.getBotVal());
+                        CvInvoke.Line(matScaledImg, lastClicked, pt, activeColor, trackBar3.Value);
                     }
                 }
                 else
                 {
                     Rectangle ccomp;
-                    CvInvoke.FloodFill(matCurrentImage, null, pt, editForm.getActiveColor(), out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
                 if (!overlayCheckBox.Checked)
@@ -755,8 +747,7 @@ namespace Profeet
         
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Console.Write("Test: ");
-            Console.WriteLine(editForm == null);
+            Console.Write(this.Size.ToString());
         }
 
         private void checkFunctionalMode_CheckedChanged(object sender, EventArgs e)
@@ -781,6 +772,270 @@ namespace Profeet
         {
             imageBox1.FunctionalMode = mode[0];
             checkFunctionalMode.Checked = false;
+        }
+
+        private void buttonColor_Click(object sender, EventArgs e)
+        {
+            Object result = pickFromColorPicker();
+
+            if (result != null)
+            {
+                activeColor = (MCvScalar)result;
+                updateColorBox();
+            }
+        }
+
+        private void radioPaint_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+            trackBar1.Visible = false;
+            label2.Visible = false;
+            trackBar2.Visible = false;
+
+            label3.Visible = true;
+            label3.Text = "Size: 1";
+
+            trackBar3.Visible = true;
+            trackBar3.Minimum = 1;
+            trackBar3.Maximum = 10;
+            trackBar3.Value = 1;
+        }
+
+        private void radioFill_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Visible = false;
+            trackBar1.Visible = false;
+
+            label2.Visible = true;
+            label2.Text = "loDiff";
+
+            trackBar2.Visible = true;
+            trackBar2.Minimum = 0;
+            trackBar2.Maximum = 255;
+            trackBar2.Value = 20;
+
+            label3.Visible = true;
+            label3.Text = "upDiff";
+
+            trackBar3.Visible = true;
+            trackBar3.Minimum = 0;
+            trackBar3.Maximum = 255;
+            trackBar3.Value = 20;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            if (radioPaint.Checked == true)
+            {
+                label3.Text = "Size: " + trackBar3.Value;
+            }
+            else
+            {
+
+            }
+        }
+
+        private Image<Bgr, Byte> makeColorBox(int width, int height, MCvScalar color)
+        {
+            Image<Bgr, Byte> i = new Image<Bgr, Byte>(width, height);
+            Rectangle ccomp;
+            CvInvoke.FloodFill(i, null, new Point(0, 0), color, out ccomp, new MCvScalar(0), new MCvScalar(0));
+            return i;
+        }
+
+        public void updateColorBox()
+        {
+            colorBox.Image = makeColorBox(128, 62, activeColor);
+        }
+
+        private void buttonEyedropper_Click(object sender, EventArgs e)
+        {
+            if (!pickingColor)
+            {
+                pickingColor = true;
+                buttonEyedropper.Enabled = false;
+            }
+            else
+            {
+                pickingColor = false;
+                buttonEyedropper.Enabled = true;
+            }
+        }
+
+        private Object pickFromColorPicker()
+        {
+            ColorDialog dialog = new ColorDialog();
+            dialog.AllowFullOpen = true;
+            dialog.AnyColor = true;
+            dialog.SolidColorOnly = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Color c = dialog.Color;
+                return new MCvScalar(c.B, c.G, c.R);
+            }
+
+            return null;
+        }
+
+        private void colorBoxPreset1_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset1.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset1 = (MCvScalar)result;
+                    colorBoxPreset1.Image = makeColorBox(58, 56, preset1);
+                }
+            }
+            else
+            {
+                activeColor = preset1;
+                updateColorBox();
+            }
+        }
+
+        private void colorBoxPreset2_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset2.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset2 = (MCvScalar)result;
+                    colorBoxPreset2.Image = makeColorBox(58, 56, preset2);
+                }
+            }
+            else
+            {
+                activeColor = preset2;
+                updateColorBox();
+            }
+        }
+
+        private void colorBoxPreset3_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset3.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset3 = (MCvScalar)result;
+                    colorBoxPreset3.Image = makeColorBox(58, 56, preset3);
+                }
+            }
+            else
+            {
+                activeColor = preset3;
+                updateColorBox();
+            }
+        }
+
+        private void colorBoxPreset4_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset4.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset4 = (MCvScalar)result;
+                    colorBoxPreset4.Image = makeColorBox(58, 56, preset4);
+                }
+            }
+            else
+            {
+                activeColor = preset4;
+                updateColorBox();
+            }
+        }
+
+        private void colorBoxPreset5_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset5.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset5 = (MCvScalar)result;
+                    colorBoxPreset5.Image = makeColorBox(58, 56, preset5);
+                }
+            }
+            else
+            {
+                activeColor = preset5;
+                updateColorBox();
+            }
+        }
+
+        private void colorBoxPreset6_Click(object sender, EventArgs e)
+        {
+            if (colorBoxPreset6.Image == null)
+            {
+                Object result = pickFromColorPicker();
+
+                if (result != null)
+                {
+                    preset6 = (MCvScalar)result;
+                    colorBoxPreset6.Image = makeColorBox(58, 56, preset6);
+                }
+            }
+            else
+            {
+                activeColor = preset6;
+                updateColorBox();
+            }
+        }
+
+        private void checkEditing_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkEditing.Checked)
+            {
+                colorBox.Enabled = true;
+                buttonColor.Enabled = true;
+                buttonEyedropper.Enabled = true;
+                colorBoxPreset1.Enabled = true;
+                colorBoxPreset2.Enabled = true;
+                colorBoxPreset3.Enabled = true;
+                colorBoxPreset4.Enabled = true;
+                colorBoxPreset5.Enabled = true;
+                colorBoxPreset6.Enabled = true;
+                radioPaint.Enabled = true;
+                radioFill.Enabled = true;
+                radioButton3.Enabled = true;
+                radioButton4.Enabled = true;
+            }
+            else
+            {
+                colorBox.Enabled = false;
+                buttonColor.Enabled = false;
+                buttonEyedropper.Enabled = false;
+                colorBoxPreset1.Enabled = false;
+                colorBoxPreset2.Enabled = false;
+                colorBoxPreset3.Enabled = false;
+                colorBoxPreset4.Enabled = false;
+                colorBoxPreset5.Enabled = false;
+                colorBoxPreset6.Enabled = false;
+                radioPaint.Enabled = false;
+                radioFill.Enabled = false;
+                radioButton3.Enabled = false;
+                radioButton4.Enabled = false;
+            }
         }
     }
 }

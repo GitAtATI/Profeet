@@ -68,47 +68,47 @@ namespace Profeet_Logo
 
         private void radioPaint_CheckedChanged(object sender, EventArgs e)
         {
-            labelTop.Visible = false;
-            trackTop.Visible = false;
-            labelMid.Visible = false;
-            trackMid.Visible = false;
+            label1.Visible = false;
+            trackBar1.Visible = false;
+            label2.Visible = false;
+            trackBar2.Visible = false;
 
-            labelBot.Visible = true;
-            labelBot.Text = "Size: 1";
+            label3.Visible = true;
+            label3.Text = "Size: 1";
 
-            trackBot.Visible = true;
-            trackBot.Minimum = 1;
-            trackBot.Maximum = 10;
-            trackBot.Value = 1;
+            trackBar3.Visible = true;
+            trackBar3.Minimum = 1;
+            trackBar3.Maximum = 10;
+            trackBar3.Value = 1;
         }
 
         private void radioFill_CheckedChanged(object sender, EventArgs e)
         {
-            labelTop.Visible = false;
-            trackTop.Visible = false;
+            label1.Visible = false;
+            trackBar1.Visible = false;
 
-            labelMid.Visible = true;
-            labelMid.Text = "loDiff";
+            label2.Visible = true;
+            label2.Text = "loDiff";
 
-            trackMid.Visible = true;
-            trackMid.Minimum = 0;
-            trackMid.Maximum = 255;
-            trackMid.Value = 20;
+            trackBar2.Visible = true;
+            trackBar2.Minimum = 0;
+            trackBar2.Maximum = 255;
+            trackBar2.Value = 20;
 
-            labelBot.Visible = true;
-            labelBot.Text = "upDiff";
+            label3.Visible = true;
+            label3.Text = "upDiff";
 
-            trackBot.Visible = true;
-            trackBot.Minimum = 0;
-            trackBot.Maximum = 255;
-            trackBot.Value = 20;
+            trackBar3.Visible = true;
+            trackBar3.Minimum = 0;
+            trackBar3.Maximum = 255;
+            trackBar3.Value = 20;
         }
 
         private void trackBot_Scroll(object sender, EventArgs e)
         {
             if (radioPaint.Checked == true)
             {
-                labelBot.Text = "Size: " + trackBot.Value;
+                label3.Text = "Size: " + trackBar3.Value;
             }
             else
             {
@@ -151,17 +151,17 @@ namespace Profeet_Logo
 
         public int getTopVal()
         {
-            return trackTop.Value;
+            return trackBar1.Value;
         }
 
         public int getMidVal()
         {
-            return trackMid.Value;
+            return trackBar2.Value;
         }
 
         public int getBotVal()
         {
-            return trackBot.Value;
+            return trackBar3.Value;
         }
     }
 }
