@@ -30,8 +30,8 @@ namespace Profeet
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
-            startColorChosen = false;
-            endColorChosen = false;
+            colorAChosen = false;
+            colorBChosen = false;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -646,6 +646,7 @@ namespace Profeet
             }
             
             Point pt = getAdjustedClick(e);
+            MCvScalar activeColor = e.Button == MouseButtons.Left ? colorA : colorB;
 
             if (pickingColor)
             {
@@ -661,11 +662,11 @@ namespace Profeet
                 int b = i.Data[pt.Y, pt.X, 0];
                 int g = i.Data[pt.Y, pt.X, 1];
                 int r = i.Data[pt.Y, pt.X, 2];
-                activeColor = new MCvScalar(b, g, r);
+                colorA = new MCvScalar(b, g, r);
                 updateColorBox();
                 startColor = new MCvScalar(b, g, r);
-                startColorChosen = true;
-                colorBoxStartColor.Image = makeColorBox(58, 56, startColor);
+                colorAChosen = true;
+                colorBoxA.Image = makeColorBox(58, 56, startColor);
                 buttonEyedropper_Click(null, null);
                 return;
             }
@@ -679,7 +680,7 @@ namespace Profeet
                 }
                 else
                 {
-                    CvInvoke.Line(scaledImg.Mat, pt, pt, activeColor, trackBar3.Value);
+                    Console.WriteLine(pt.ToString());
                 }
 
             }
@@ -702,17 +703,19 @@ namespace Profeet
                 swapCorner1 = pt;
             }
 
-
-            if (!overlayCheckBox.Checked)
+            if (!radioSwap.Checked)
             {
-                currentImg = currentImg.Mat.ToImage<Bgr, Byte>();
-                imageBox1.Image = currentImg;
-            }
-            else
-            {
-                currentImg = scaledImg.Mat.ToImage<Bgr, Byte>();
-                imageBox1.Image = currentImg;
-                overlayTrackBar_Scroll(null, null);
+                if (!overlayCheckBox.Checked)
+                {
+                    currentImg = currentImg.Mat.ToImage<Bgr, Byte>();
+                    imageBox1.Image = currentImg;
+                }
+                else
+                {
+                    currentImg = scaledImg.Mat.ToImage<Bgr, Byte>();
+                    imageBox1.Image = currentImg;
+                    overlayTrackBar_Scroll(null, null);
+                }
             }
 
             mouseDrag = true;
@@ -726,8 +729,8 @@ namespace Profeet
             lastClicked = new Point(-1, -1);
             Point topLeft = swapCorner1;
             Point botRight = getAdjustedClick(e);
-            Bgr testColor = new Bgr(activeColor.V0, activeColor.V1, activeColor.V2);
-            Bgr bgrEndColor = new Bgr(endColor.V0, endColor.V1, endColor.V2);
+            Bgr testColor = new Bgr(colorA.V0, colorA.V1, colorA.V2);
+            Bgr bgrEndColor = new Bgr(colorB.V0, colorB.V1, colorB.V2);
             if (swapCorner1.X != -1 && radioSwap.Checked)
             {
                 for (int y = topLeft.Y; y < botRight.Y; y++)
@@ -748,6 +751,9 @@ namespace Profeet
         private void imageBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (imageBox1.FunctionalMode.Equals(mode[1])) return;
+
+            MCvScalar activeColor = e.Button == MouseButtons.Left ? colorA : colorB;
+
             if (mouseDrag)
             {
                 Point pt = getAdjustedClick(e);
@@ -794,7 +800,7 @@ namespace Profeet
             int x = (int)(xOffset + (e.X / zoom));
             int y = (int)(yOffset + (e.Y / zoom));
 
-            if (overlayCheckBox.Checked)
+            if (overlayCheckBox.Checked && factorX != 0 && factorY != 0)
             {
                 x = x / factorX;
                 y = y / factorY;
@@ -850,7 +856,7 @@ namespace Profeet
 
             if (result != null)
             {
-                activeColor = (MCvScalar)result;
+                colorA = (MCvScalar)result;
                 updateColorBox();
             }
         }
@@ -895,7 +901,7 @@ namespace Profeet
 
         private void radioSwap_CheckedChanged(object sender, EventArgs e)
         {
-            if (!startColorChosen || !endColorChosen)
+            if (!colorAChosen || !colorBChosen)
             {
                 radioPaint.Checked = true;
                 return;
@@ -941,7 +947,7 @@ namespace Profeet
 
         public void updateColorBox()
         {
-            colorBox.Image = makeColorBox(128, 62, activeColor);
+            colorBoxA.Image = makeColorBox(58, 56, colorA);
         }
 
         private void buttonEyedropper_Click(object sender, EventArgs e)
@@ -988,7 +994,7 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset1;
+                colorA = preset1;
                 updateColorBox();
             }
         }
@@ -1007,7 +1013,7 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset2;
+                colorA = preset2;
                 updateColorBox();
             }
         }
@@ -1026,7 +1032,7 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset3;
+                colorA = preset3;
                 updateColorBox();
             }
         }
@@ -1045,7 +1051,7 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset4;
+                colorA = preset4;
                 updateColorBox();
             }
         }
@@ -1064,7 +1070,7 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset5;
+                colorA = preset5;
                 updateColorBox();
             }
         }
@@ -1083,32 +1089,32 @@ namespace Profeet
             }
             else
             {
-                activeColor = preset6;
+                colorA = preset6;
                 updateColorBox();
             }
         }
 
-        private void imageBoxStartColor_Click(object sender, EventArgs e)
+        private void colorBoxA_Click(object sender, EventArgs e)
         {
             Object result = pickFromColorPicker();
 
             if (result != null)
             {
-                startColor = (MCvScalar)result;
-                colorBoxStartColor.Image = makeColorBox(58, 56, startColor);
-                startColorChosen = true;
+                colorA = (MCvScalar)result;
+                colorBoxA.Image = makeColorBox(58, 56, colorA);
+                colorAChosen = true;
             }
         }
 
-        private void imageBoxEndColor_Click(object sender, EventArgs e)
+        private void colorBoxB_Click(object sender, EventArgs e)
         {
             Object result = pickFromColorPicker();
 
             if (result != null)
             {
-                endColor = (MCvScalar)result;
-                colorBoxEndColor.Image = makeColorBox(58, 56, endColor);
-                endColorChosen = true;
+                colorB = (MCvScalar)result;
+                colorBoxB.Image = makeColorBox(58, 56, colorB);
+                colorBChosen = true;
             }
         }
 
@@ -1116,7 +1122,6 @@ namespace Profeet
         {
             if (checkEditing.Checked)
             {
-                colorBox.Enabled = true;
                 buttonColor.Enabled = true;
                 buttonEyedropper.Enabled = true;
                 colorBoxPreset1.Enabled = true;
@@ -1129,12 +1134,11 @@ namespace Profeet
                 radioFill.Enabled = true;
                 radioSwap.Enabled = true;
                 radioButton4.Enabled = true;
-                colorBoxStartColor.Enabled = true;
-                colorBoxEndColor.Enabled = true;
+                colorBoxA.Enabled = true;
+                colorBoxB.Enabled = true;
             }
             else
             {
-                colorBox.Enabled = false;
                 buttonColor.Enabled = false;
                 buttonEyedropper.Enabled = false;
                 colorBoxPreset1.Enabled = false;
@@ -1147,8 +1151,8 @@ namespace Profeet
                 radioFill.Enabled = false;
                 radioSwap.Enabled = false;
                 radioButton4.Enabled = false;
-                colorBoxStartColor.Enabled = false;
-                colorBoxEndColor.Enabled = false;
+                colorBoxA.Enabled = false;
+                colorBoxB.Enabled = false;
             }
         }
     }
