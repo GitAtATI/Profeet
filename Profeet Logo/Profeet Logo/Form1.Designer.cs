@@ -55,7 +55,7 @@ namespace Profeet
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.checkEditing = new System.Windows.Forms.CheckBox();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioSwap = new System.Windows.Forms.RadioButton();
             this.radioFill = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.colorBoxPreset6 = new Emgu.CV.UI.ImageBox();
@@ -77,6 +77,12 @@ namespace Profeet
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.checkFunctionalMode = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.colorBoxStartColor = new Emgu.CV.UI.ImageBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.colorBoxEndColor = new Emgu.CV.UI.ImageBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.panelOverlay = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -103,6 +109,10 @@ namespace Profeet
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
+            this.tableLayoutPanel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorBoxStartColor)).BeginInit();
+            this.tableLayoutPanel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorBoxEndColor)).BeginInit();
             this.panelOverlay.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
@@ -294,7 +304,7 @@ namespace Profeet
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.checkEditing, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.radioButton4, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.radioButton3, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.radioSwap, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.radioFill, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.buttonEyedropper, 0, 2);
@@ -310,6 +320,8 @@ namespace Profeet
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.checkFunctionalMode, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel7, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -330,7 +342,7 @@ namespace Profeet
             // checkEditing
             // 
             this.checkEditing.AutoSize = true;
-            this.checkEditing.Location = new System.Drawing.Point(137, 615);
+            this.checkEditing.Location = new System.Drawing.Point(3, 615);
             this.checkEditing.Name = "checkEditing";
             this.checkEditing.Size = new System.Drawing.Size(100, 24);
             this.checkEditing.TabIndex = 19;
@@ -351,18 +363,19 @@ namespace Profeet
             this.radioButton4.Text = "radioButton4";
             this.radioButton4.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // radioSwap
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButton3.Enabled = false;
-            this.radioButton3.Location = new System.Drawing.Point(3, 275);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(128, 62);
-            this.radioButton3.TabIndex = 9;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioSwap.AutoSize = true;
+            this.radioSwap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioSwap.Enabled = false;
+            this.radioSwap.Location = new System.Drawing.Point(3, 275);
+            this.radioSwap.Name = "radioSwap";
+            this.radioSwap.Size = new System.Drawing.Size(128, 62);
+            this.radioSwap.TabIndex = 9;
+            this.radioSwap.TabStop = true;
+            this.radioSwap.Text = "Swap Color";
+            this.radioSwap.UseVisualStyleBackColor = true;
+            this.radioSwap.CheckedChanged += new System.EventHandler(this.radioSwap_CheckedChanged);
             // 
             // radioFill
             // 
@@ -385,6 +398,7 @@ namespace Profeet
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Controls.Add(this.colorBoxPreset6, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.colorBoxPreset5, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(137, 139);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
@@ -458,6 +472,7 @@ namespace Profeet
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.colorBoxPreset2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.colorBoxPreset1, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(137, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -496,6 +511,7 @@ namespace Profeet
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.colorBoxPreset4, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.colorBoxPreset3, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(137, 71);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
@@ -613,13 +629,89 @@ namespace Profeet
             this.checkFunctionalMode.AutoSize = true;
             this.checkFunctionalMode.Checked = true;
             this.checkFunctionalMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkFunctionalMode.Location = new System.Drawing.Point(3, 615);
+            this.checkFunctionalMode.Location = new System.Drawing.Point(137, 615);
             this.checkFunctionalMode.Name = "checkFunctionalMode";
             this.checkFunctionalMode.Size = new System.Drawing.Size(105, 24);
             this.checkFunctionalMode.TabIndex = 18;
             this.checkFunctionalMode.Text = "Pan & Zoom";
             this.checkFunctionalMode.UseVisualStyleBackColor = true;
             this.checkFunctionalMode.CheckedChanged += new System.EventHandler(this.checkFunctionalMode_CheckedChanged);
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Controls.Add(this.colorBoxStartColor, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 343);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(128, 62);
+            this.tableLayoutPanel7.TabIndex = 20;
+            // 
+            // colorBoxStartColor
+            // 
+            this.colorBoxStartColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colorBoxStartColor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colorBoxStartColor.Enabled = false;
+            this.colorBoxStartColor.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxStartColor.Name = "colorBoxStartColor";
+            this.colorBoxStartColor.Size = new System.Drawing.Size(58, 56);
+            this.colorBoxStartColor.TabIndex = 3;
+            this.colorBoxStartColor.TabStop = false;
+            this.colorBoxStartColor.Click += new System.EventHandler(this.imageBoxStartColor_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 62);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Start Color";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Controls.Add(this.colorBoxEndColor, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(137, 343);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(129, 62);
+            this.tableLayoutPanel8.TabIndex = 21;
+            // 
+            // colorBoxEndColor
+            // 
+            this.colorBoxEndColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.colorBoxEndColor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colorBoxEndColor.Enabled = false;
+            this.colorBoxEndColor.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxEndColor.Name = "colorBoxEndColor";
+            this.colorBoxEndColor.Size = new System.Drawing.Size(59, 56);
+            this.colorBoxEndColor.TabIndex = 3;
+            this.colorBoxEndColor.TabStop = false;
+            this.colorBoxEndColor.Click += new System.EventHandler(this.imageBoxEndColor_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 62);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "End Color";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelOverlay
             // 
@@ -767,6 +859,12 @@ namespace Profeet
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorBoxStartColor)).EndInit();
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorBoxEndColor)).EndInit();
             this.panelOverlay.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
@@ -818,7 +916,7 @@ namespace Profeet
         private Emgu.CV.UI.ImageBox imageBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioSwap;
         private System.Windows.Forms.RadioButton radioFill;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private Emgu.CV.UI.ImageBox colorBoxPreset6;
@@ -856,5 +954,15 @@ namespace Profeet
         private Emgu.CV.Structure.MCvScalar preset6;
         public bool pickingColor;
         private System.Windows.Forms.CheckBox checkEditing;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private Emgu.CV.UI.ImageBox colorBoxStartColor;
+        private Emgu.CV.Structure.MCvScalar startColor;
+        private bool startColorChosen;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private Emgu.CV.UI.ImageBox colorBoxEndColor;
+        private Emgu.CV.Structure.MCvScalar endColor;
+        private bool endColorChosen;
+        private System.Windows.Forms.Label label5;
     }
 }

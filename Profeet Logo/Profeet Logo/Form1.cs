@@ -29,6 +29,8 @@ namespace Profeet
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
+            startColorChosen = false;
+            endColorChosen = false;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -218,7 +220,29 @@ namespace Profeet
         
         private void steppingResizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            tempImg = currentImg.Copy();
 
+            Size sizeGoal = new Size(50, 30);
+            int colorGoal = 3;
+            int steps = 5;
+
+            int widthStep = (currentImg.Width - sizeGoal.Width) / steps;
+            int heightStep = (currentImg.Height - sizeGoal.Height) / steps;
+            int colorStep = 1;
+
+            for (int i = steps - 1; i >= 0; i--)
+            {
+                Console.WriteLine(i);
+                int tempWidth = sizeGoal.Width + (i * widthStep);
+                int tempHeight = sizeGoal.Height + (i * heightStep);
+                int tempColor = colorGoal + (i * colorStep);
+                tempImg = tempImg.Resize(tempWidth, tempHeight, Emgu.CV.CvEnum.Inter.Area, false);
+                tempImg = reduceColors(tempImg, tempColor);
+
+                imageBox1.Image = tempImg;
+                System.Threading.Thread.Sleep(1000);
+            }
+            
         }
 
         private void colorLimitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -475,9 +499,16 @@ namespace Profeet
             TextBox txtbx = (TextBox)generalForm.Controls["textColors"];
             int noOfColors = Convert.ToInt32(txtbx.Text);
 
-            Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
+            tempImg = reduceColors(tempImg, noOfColors);
+
+            currentImg = tempImg.Copy();
+            imageBox1.Image = currentImg;
+        }
+
+        private Image<Bgr, byte> reduceColors(Image<Bgr, byte> image, int noOfColors)
+        {
             Mat matLocalImg = new Mat();
-            matLocalImg = tempImg.Mat;
+            matLocalImg = image.Mat;
 
             Matrix<float> points = new Matrix<float>(matLocalImg.Cols * matLocalImg.Rows, 3);
             Bgr temp;
@@ -501,6 +532,8 @@ namespace Profeet
 
             CvInvoke.Kmeans(points, noOfColors, labels, criteria, 10, KMeansInitType.PPCenters, centers);
 
+            Image<Bgr, byte> reducingTempImg = new Image<Bgr, byte>(image.Size);
+
             int cluster;
             Bgr color;
             i = 0;
@@ -510,14 +543,14 @@ namespace Profeet
                 {
                     cluster = labels[i, 0];
                     color = new Bgr(centers[cluster, 0], centers[cluster, 1], centers[cluster, 2]);
-                    tempImg[y, x] = color;
+                    reducingTempImg[y, x] = color;
                     i++;
                 }
             }
-            currentImg = tempImg.Copy();
-            imageBox1.Image = currentImg;
+
+            return reducingTempImg;
         }
-        
+
         private void Form1_Resize(object sender, EventArgs e)
         {
             imageBox1.Size = new System.Drawing.Size(this.Size.Width - 15, this.Size.Height - 120);
@@ -631,12 +664,13 @@ namespace Profeet
                 int r = i.Data[pt.Y, pt.X, 2];
                 activeColor = new MCvScalar(b, g, r);
                 updateColorBox();
+                startColor = new MCvScalar(b, g, r);
+                colorBoxStartColor.Image = makeColorBox(58, 56, startColor);
                 buttonEyedropper_Click(null, null);
                 return;
             }
 
-            //Paint
-            if (radioPaint.Checked)
+            if (radioPaint.Checked) //Paint
             {
                 //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
                 //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
@@ -650,8 +684,7 @@ namespace Profeet
                 }
 
             }
-            //Fill
-            else
+            if (radioFill.Checked) //Fill
             {
                 Rectangle ccomp;
                 if (!overlayCheckBox.Checked)
@@ -665,6 +698,11 @@ namespace Profeet
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
             }
+            if (radioSwap.Checked) //Swap brush
+            {
+
+            }
+
 
             if (!overlayCheckBox.Checked)
             {
@@ -747,7 +785,6 @@ namespace Profeet
         
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Console.Write(this.Size.ToString());
         }
 
         private void checkFunctionalMode_CheckedChanged(object sender, EventArgs e)
@@ -821,6 +858,22 @@ namespace Profeet
             trackBar3.Minimum = 0;
             trackBar3.Maximum = 255;
             trackBar3.Value = 20;
+        }
+
+        private void radioSwap_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!startColorChosen || !endColorChosen)
+            {
+                radioPaint.Checked = true;
+                return;
+            }
+
+            label1.Visible = false;
+            trackBar1.Visible = false;
+            label2.Visible = false;
+            trackBar2.Visible = false;
+            label3.Visible = false;
+            trackBar3.Visible = false;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -1002,6 +1055,30 @@ namespace Profeet
             }
         }
 
+        private void imageBoxStartColor_Click(object sender, EventArgs e)
+        {
+            Object result = pickFromColorPicker();
+
+            if (result != null)
+            {
+                startColor = (MCvScalar)result;
+                colorBoxStartColor.Image = makeColorBox(58, 56, startColor);
+                startColorChosen = true;
+            }
+        }
+
+        private void imageBoxEndColor_Click(object sender, EventArgs e)
+        {
+            Object result = pickFromColorPicker();
+
+            if (result != null)
+            {
+                endColor = (MCvScalar)result;
+                colorBoxEndColor.Image = makeColorBox(58, 56, endColor);
+                endColorChosen = true;
+            }
+        }
+
         private void checkEditing_CheckedChanged(object sender, EventArgs e)
         {
             if (checkEditing.Checked)
@@ -1017,8 +1094,10 @@ namespace Profeet
                 colorBoxPreset6.Enabled = true;
                 radioPaint.Enabled = true;
                 radioFill.Enabled = true;
-                radioButton3.Enabled = true;
+                radioSwap.Enabled = true;
                 radioButton4.Enabled = true;
+                colorBoxStartColor.Enabled = true;
+                colorBoxEndColor.Enabled = true;
             }
             else
             {
@@ -1033,8 +1112,10 @@ namespace Profeet
                 colorBoxPreset6.Enabled = false;
                 radioPaint.Enabled = false;
                 radioFill.Enabled = false;
-                radioButton3.Enabled = false;
+                radioSwap.Enabled = false;
                 radioButton4.Enabled = false;
+                colorBoxStartColor.Enabled = false;
+                colorBoxEndColor.Enabled = false;
             }
         }
     }
