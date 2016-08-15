@@ -559,7 +559,6 @@ namespace Profeet
 
         private void overlayTrackBar_Scroll(object sender, EventArgs e)
         {
-            Console.WriteLine(overlayTrackBar.Value);
             
             if (overlayTrackBar.Value != 0 && overlayTrackBar.Value != 100)
             {
@@ -1136,6 +1135,8 @@ namespace Profeet
                 radioButton4.Enabled = true;
                 colorBoxA.Enabled = true;
                 colorBoxB.Enabled = true;
+                checkFunctionalMode.Checked = false;
+                checkFunctionalMode_CheckedChanged(null, null);
             }
             else
             {
@@ -1153,6 +1154,8 @@ namespace Profeet
                 radioButton4.Enabled = false;
                 colorBoxA.Enabled = false;
                 colorBoxB.Enabled = false;
+                checkFunctionalMode.Checked = true;
+                checkFunctionalMode_CheckedChanged(null, null);
             }
         }
     }

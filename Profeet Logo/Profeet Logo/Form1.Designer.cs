@@ -50,7 +50,6 @@ namespace Profeet
             this.floatStitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stitchSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelImage = new System.Windows.Forms.Panel();
-            this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.panelPaint = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.checkEditing = new System.Windows.Forms.CheckBox();
@@ -87,9 +86,9 @@ namespace Profeet
             this.overlayCheckBox = new System.Windows.Forms.CheckBox();
             this.radioZero = new System.Windows.Forms.RadioButton();
             this.overlayTrackBar = new System.Windows.Forms.TrackBar();
+            this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.menuStrip1.SuspendLayout();
             this.panelImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.panelPaint.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -111,6 +110,7 @@ namespace Profeet
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -267,21 +267,8 @@ namespace Profeet
             this.panelImage.Location = new System.Drawing.Point(0, 24);
             this.panelImage.Margin = new System.Windows.Forms.Padding(2);
             this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(656, 438);
+            this.panelImage.Size = new System.Drawing.Size(472, 407);
             this.panelImage.TabIndex = 1;
-            // 
-            // imageBox1
-            // 
-            this.imageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageBox1.Location = new System.Drawing.Point(0, 0);
-            this.imageBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(652, 434);
-            this.imageBox1.TabIndex = 0;
-            this.imageBox1.TabStop = false;
-            this.imageBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseDown);
-            this.imageBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseMove);
-            this.imageBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseUp);
             // 
             // panelPaint
             // 
@@ -804,14 +791,24 @@ namespace Profeet
             this.overlayTrackBar.TickFrequency = 10;
             this.overlayTrackBar.Scroll += new System.EventHandler(this.overlayTrackBar_Scroll);
             // 
+            // imageBox1
+            // 
+            this.imageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageBox1.Location = new System.Drawing.Point(0, 0);
+            this.imageBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.imageBox1.Name = "imageBox1";
+            this.imageBox1.Size = new System.Drawing.Size(468, 403);
+            this.imageBox1.TabIndex = 2;
+            this.imageBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(656, 462);
+            this.Controls.Add(this.panelImage);
             this.Controls.Add(this.panelOverlay);
             this.Controls.Add(this.panelPaint);
-            this.Controls.Add(this.panelImage);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -822,7 +819,6 @@ namespace Profeet
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panelImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             this.panelPaint.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -847,6 +843,7 @@ namespace Profeet
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.overlayTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -887,7 +884,6 @@ namespace Profeet
         private System.Windows.Forms.Panel panelImage;
         private System.Windows.Forms.Panel panelPaint;
         private System.Windows.Forms.Panel panelOverlay;
-        private Emgu.CV.UI.ImageBox imageBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.RadioButton radioButton4;
         private System.Windows.Forms.RadioButton radioSwap;
@@ -935,5 +931,6 @@ namespace Profeet
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private Emgu.CV.UI.ImageBox colorBoxB;
         private Emgu.CV.UI.ImageBox colorBoxA;
+        private Emgu.CV.UI.ImageBox imageBox1;
     }
 }
