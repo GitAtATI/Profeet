@@ -940,13 +940,11 @@ namespace Profeet
         private System.Windows.Forms.ToolStripMenuItem steppingResizeToolStripMenuItem;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> originalImg;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> tempImg;
+        private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> scaledImg;
         private Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> currentImg;
         private System.Drawing.Point lastClicked;
         private System.Windows.Forms.Form generalForm;
         private string origImageFile;
-        private Emgu.CV.Mat matCurrentImage;
-        private Emgu.CV.Mat matTempImage;
-        private Emgu.CV.Mat matScaledImg;
         private Profeet_Logo.functionControls modelessForm;
         private bool mouseDrag;
         public Emgu.CV.UI.ImageBox.FunctionalModeOption[] mode;

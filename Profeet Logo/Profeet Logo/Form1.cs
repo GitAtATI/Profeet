@@ -26,6 +26,7 @@ namespace Profeet
         {
             InitializeComponent();
             lastClicked = new Point(-1, -1);
+            swapCorner1 = new Point(-1, -1);
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
@@ -43,8 +44,8 @@ namespace Profeet
                 currentImg = new Image<Bgr, byte>(originalImg.Size);
                 tempImg = new Image<Bgr, byte>(originalImg.Size);
                 currentImg = originalImg.Copy();
-                matCurrentImage = new Mat(Openfile.FileName, Emgu.CV.CvEnum.LoadImageType.Color);
-                imageBox1.Image = matCurrentImage;
+                //matCurrentImage = new Mat(Openfile.FileName, Emgu.CV.CvEnum.LoadImageType.Color);
+                imageBox1.Image = currentImg.Mat;
             }
             overlayCheckBox.Enabled = true;
         }
@@ -349,7 +350,7 @@ namespace Profeet
             int thresholdLinking = Convert.ToInt32(trackbarThresholdLinking.Value);
 
             Emgu.CV.Image<Emgu.CV.Structure.Bgr, System.Byte> localImg;
-            localImg = matCurrentImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
+            localImg = currentImg.Mat.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
             Mat cannyImage = new Mat();
             CvInvoke.Canny(currentImg, cannyImage, threshold, thresholdLinking);
             tempImg = cannyImage.ToImage<Emgu.CV.Structure.Bgr, System.Byte>(false);
@@ -566,8 +567,7 @@ namespace Profeet
             }
 
             double threshold = Convert.ToDouble(overlayTrackBar.Value) / 100;
-
-            Image<Bgr, byte> scaledImg;
+            
             if (originalImg.Size.Equals(currentImg.Size))
             {
                 scaledImg = (1.0 - threshold) * originalImg + threshold * currentImg;
@@ -585,8 +585,7 @@ namespace Profeet
 
                 scaledImg = (1.0 - threshold) * scaledOriginalImg + threshold * scaledCurrentImg;
             }
-
-            matScaledImg = currentImg.Mat;
+            
             imageBox1.Image = scaledImg;
         }
 
@@ -653,11 +652,11 @@ namespace Profeet
                 Image<Bgr, Byte> i;
                 if (!overlayCheckBox.Checked)
                 {
-                    i = matCurrentImage.ToImage<Bgr, Byte>();
+                    i = currentImg;
                 }
                 else
                 {
-                    i = matScaledImg.ToImage<Bgr, Byte>();
+                    i = scaledImg;
                 }
                 int b = i.Data[pt.Y, pt.X, 0];
                 int g = i.Data[pt.Y, pt.X, 1];
@@ -665,53 +664,53 @@ namespace Profeet
                 activeColor = new MCvScalar(b, g, r);
                 updateColorBox();
                 startColor = new MCvScalar(b, g, r);
+                startColorChosen = true;
                 colorBoxStartColor.Image = makeColorBox(58, 56, startColor);
                 buttonEyedropper_Click(null, null);
                 return;
             }
-
-            if (radioPaint.Checked) //Paint
+            else if (radioPaint.Checked) //Paint
             {
-                //Image<Bgr, byte> testImg = matCurrentImage.ToImage<Bgr, byte>();
+                //Image<Bgr, byte> testImg = currentImg.Mat.ToImage<Bgr, byte>();
                 //Console.WriteLine("B: " + testImg.Data[pt.Y, pt.X, 0] + ", G: " + testImg.Data[pt.Y, pt.X, 1] + ", R: " + testImg.Data[pt.Y, pt.X, 2]);
                 if (!overlayCheckBox.Checked)
                 {
-                    CvInvoke.Line(matCurrentImage, pt, pt, activeColor, trackBar3.Value);
+                    CvInvoke.Line(currentImg.Mat, pt, pt, activeColor, trackBar3.Value);
                 }
                 else
                 {
-                    CvInvoke.Line(matScaledImg, pt, pt, activeColor, trackBar3.Value);
+                    CvInvoke.Line(scaledImg.Mat, pt, pt, activeColor, trackBar3.Value);
                 }
 
             }
-            if (radioFill.Checked) //Fill
+            else if (radioFill.Checked) //Fill
             {
                 Rectangle ccomp;
                 if (!overlayCheckBox.Checked)
                 {
-                    CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(currentImg.Mat, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
                 else
                 {
-                    CvInvoke.FloodFill(matScaledImg, null, pt, activeColor, out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(scaledImg.Mat, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
             }
             if (radioSwap.Checked) //Swap brush
             {
-
+                swapCorner1 = pt;
             }
 
 
             if (!overlayCheckBox.Checked)
             {
-                currentImg = matCurrentImage.ToImage<Bgr, Byte>();
+                currentImg = currentImg.Mat.ToImage<Bgr, Byte>();
                 imageBox1.Image = currentImg;
             }
             else
             {
-                currentImg = matScaledImg.ToImage<Bgr, Byte>();
+                currentImg = scaledImg.Mat.ToImage<Bgr, Byte>();
                 imageBox1.Image = currentImg;
                 overlayTrackBar_Scroll(null, null);
             }
@@ -725,6 +724,25 @@ namespace Profeet
             if (imageBox1.FunctionalMode.Equals(mode[1])) return;
             mouseDrag = false;
             lastClicked = new Point(-1, -1);
+            Point topLeft = swapCorner1;
+            Point botRight = getAdjustedClick(e);
+            Bgr testColor = new Bgr(activeColor.V0, activeColor.V1, activeColor.V2);
+            Bgr bgrEndColor = new Bgr(endColor.V0, endColor.V1, endColor.V2);
+            if (swapCorner1.X != -1 && radioSwap.Checked)
+            {
+                for (int y = topLeft.Y; y < botRight.Y; y++)
+                {
+                    for (int x = topLeft.X; x < botRight.X; x++)
+                    {
+                        if (currentImg[y, x].Equals(testColor))
+                        {
+                            currentImg[y, x] = bgrEndColor;
+                        }
+                    }
+                }
+                imageBox1.Image = currentImg;
+            }
+            swapCorner1 = new Point(-1, -1);
         }
 
         private void imageBox1_MouseMove(object sender, MouseEventArgs e)
@@ -734,30 +752,32 @@ namespace Profeet
             {
                 Point pt = getAdjustedClick(e);
                 if (lastClicked.X < 0) lastClicked = pt;
+
                 if (radioPaint.Checked)
                 {
                     if (!overlayCheckBox.Checked)
                     { 
-                        CvInvoke.Line(matCurrentImage, lastClicked, pt, activeColor, trackBar3.Value);
+                        CvInvoke.Line(currentImg.Mat, lastClicked, pt, activeColor, trackBar3.Value);
                     }
                     else
                     {
-                        CvInvoke.Line(matScaledImg, lastClicked, pt, activeColor, trackBar3.Value);
+                        CvInvoke.Line(scaledImg.Mat, lastClicked, pt, activeColor, trackBar3.Value);
                     }
                 }
-                else
+                else if (radioFill.Checked)
                 {
                     Rectangle ccomp;
-                    CvInvoke.FloodFill(matCurrentImage, null, pt, activeColor, out ccomp, new MCvScalar(20),
+                    CvInvoke.FloodFill(currentImg.Mat, null, pt, activeColor, out ccomp, new MCvScalar(20),
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
+
                 if (!overlayCheckBox.Checked)
                 {
-                    imageBox1.Image = matCurrentImage.ToImage<Bgr, Byte>();
+                    imageBox1.Image = currentImg.Mat.ToImage<Bgr, Byte>();
                 }
                 else
                 {
-                    tempImg = matScaledImg.ToImage<Bgr, Byte>();
+                    tempImg = scaledImg.Mat.ToImage<Bgr, Byte>();
                     overlayTrackBar_Scroll(null, null);
                 }
                 lastClicked = pt;
@@ -785,6 +805,19 @@ namespace Profeet
         
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Image<Bgr, byte> testImage = new Image<Bgr, byte>(currentImg.Size);
+            for (int y = 0; y < testImage.Height; y++)
+            {
+                for (int x = 0; x < testImage.Width; x++)
+                {
+                    testImage[y, x] = new Bgr(255, 0, 255);
+                    if (y == 15)
+                    {
+                        testImage[y, x] = new Bgr(0, 0, 0);
+                    }
+                }
+            }
+            imageBox1.Image = testImage;
         }
 
         private void checkFunctionalMode_CheckedChanged(object sender, EventArgs e)
