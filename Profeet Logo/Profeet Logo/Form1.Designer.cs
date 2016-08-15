@@ -121,6 +121,7 @@ namespace Profeet
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -128,8 +129,8 @@ namespace Profeet
             this.stitchChecksToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(984, 25);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.menuStrip1.Size = new System.Drawing.Size(1312, 44);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -140,27 +141,27 @@ namespace Profeet
             this.saveToolStripMenuItem,
             this.saveToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 36);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(197, 38);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(197, 38);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(197, 38);
             this.saveToolStripMenuItem1.Text = "Save As";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -170,20 +171,20 @@ namespace Profeet
             this.undoToolStripMenuItem,
             this.originalImageToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 19);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(67, 36);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // originalImageToolStripMenuItem
             // 
             this.originalImageToolStripMenuItem.Name = "originalImageToolStripMenuItem";
-            this.originalImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.originalImageToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
             this.originalImageToolStripMenuItem.Text = "Original Image";
             this.originalImageToolStripMenuItem.Click += new System.EventHandler(this.originalImageToolStripMenuItem_Click);
             // 
@@ -196,41 +197,41 @@ namespace Profeet
             this.steppingResizeToolStripMenuItem,
             this.debugToolStripMenuItem});
             this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
-            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(71, 19);
+            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(130, 36);
             this.functionsToolStripMenuItem.Text = "Functions";
             // 
             // colorReductionToolStripMenuItem
             // 
             this.colorReductionToolStripMenuItem.Name = "colorReductionToolStripMenuItem";
-            this.colorReductionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.colorReductionToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
             this.colorReductionToolStripMenuItem.Text = "Color Reduction";
             this.colorReductionToolStripMenuItem.Click += new System.EventHandler(this.colorReductionToolStripMenuItem_Click);
             // 
             // edgeDetectionToolStripMenuItem
             // 
             this.edgeDetectionToolStripMenuItem.Name = "edgeDetectionToolStripMenuItem";
-            this.edgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.edgeDetectionToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
             this.edgeDetectionToolStripMenuItem.Text = "Edge Detection";
             this.edgeDetectionToolStripMenuItem.Click += new System.EventHandler(this.edgeDetectionToolStripMenuItem_Click);
             // 
             // resizeToolStripMenuItem
             // 
             this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
             this.resizeToolStripMenuItem.Text = "Resize";
             this.resizeToolStripMenuItem.Click += new System.EventHandler(this.resizeToolStripMenuItem_Click);
             // 
             // steppingResizeToolStripMenuItem
             // 
             this.steppingResizeToolStripMenuItem.Name = "steppingResizeToolStripMenuItem";
-            this.steppingResizeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.steppingResizeToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
             this.steppingResizeToolStripMenuItem.Text = "Stepping Resize";
             this.steppingResizeToolStripMenuItem.Click += new System.EventHandler(this.steppingResizeToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
             this.debugToolStripMenuItem.Text = "Debug";
             this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
             // 
@@ -241,27 +242,27 @@ namespace Profeet
             this.floatStitchToolStripMenuItem,
             this.stitchSimulationToolStripMenuItem});
             this.stitchChecksToolStripMenuItem.Name = "stitchChecksToolStripMenuItem";
-            this.stitchChecksToolStripMenuItem.Size = new System.Drawing.Size(90, 19);
+            this.stitchChecksToolStripMenuItem.Size = new System.Drawing.Size(168, 36);
             this.stitchChecksToolStripMenuItem.Text = "Stitch Checks";
             // 
             // colorLimitToolStripMenuItem
             // 
             this.colorLimitToolStripMenuItem.Name = "colorLimitToolStripMenuItem";
-            this.colorLimitToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.colorLimitToolStripMenuItem.Size = new System.Drawing.Size(295, 38);
             this.colorLimitToolStripMenuItem.Text = "Color Limit";
             this.colorLimitToolStripMenuItem.Click += new System.EventHandler(this.colorLimitToolStripMenuItem_Click);
             // 
             // floatStitchToolStripMenuItem
             // 
             this.floatStitchToolStripMenuItem.Name = "floatStitchToolStripMenuItem";
-            this.floatStitchToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.floatStitchToolStripMenuItem.Size = new System.Drawing.Size(295, 38);
             this.floatStitchToolStripMenuItem.Text = "Float Stitch";
             this.floatStitchToolStripMenuItem.Click += new System.EventHandler(this.floatStitchLimitToolStripMenuItem_Click);
             // 
             // stitchSimulationToolStripMenuItem
             // 
             this.stitchSimulationToolStripMenuItem.Name = "stitchSimulationToolStripMenuItem";
-            this.stitchSimulationToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.stitchSimulationToolStripMenuItem.Size = new System.Drawing.Size(295, 38);
             this.stitchSimulationToolStripMenuItem.Text = "Stitch Simulation";
             this.stitchSimulationToolStripMenuItem.Click += new System.EventHandler(this.stitchSimulationToolStripMenuItem_Click);
             // 
@@ -270,17 +271,19 @@ namespace Profeet
             this.panelImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelImage.Controls.Add(this.imageBox1);
             this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImage.Location = new System.Drawing.Point(0, 25);
+            this.panelImage.Location = new System.Drawing.Point(0, 44);
+            this.panelImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(984, 686);
+            this.panelImage.Size = new System.Drawing.Size(1312, 845);
             this.panelImage.TabIndex = 1;
             // 
             // imageBox1
             // 
             this.imageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageBox1.Location = new System.Drawing.Point(0, 0);
+            this.imageBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(980, 682);
+            this.imageBox1.Size = new System.Drawing.Size(1308, 841);
             this.imageBox1.TabIndex = 0;
             this.imageBox1.TabStop = false;
             this.imageBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBox1_MouseDown);
@@ -292,9 +295,10 @@ namespace Profeet
             this.panelPaint.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelPaint.Controls.Add(this.tableLayoutPanel1);
             this.panelPaint.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelPaint.Location = new System.Drawing.Point(711, 25);
+            this.panelPaint.Location = new System.Drawing.Point(949, 44);
+            this.panelPaint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelPaint.Name = "panelPaint";
-            this.panelPaint.Size = new System.Drawing.Size(273, 686);
+            this.panelPaint.Size = new System.Drawing.Size(363, 845);
             this.panelPaint.TabIndex = 2;
             // 
             // tableLayoutPanel1
@@ -324,6 +328,7 @@ namespace Profeet
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -336,15 +341,16 @@ namespace Profeet
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(269, 682);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(359, 841);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // checkEditing
             // 
             this.checkEditing.AutoSize = true;
-            this.checkEditing.Location = new System.Drawing.Point(3, 615);
+            this.checkEditing.Location = new System.Drawing.Point(4, 760);
+            this.checkEditing.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkEditing.Name = "checkEditing";
-            this.checkEditing.Size = new System.Drawing.Size(100, 24);
+            this.checkEditing.Size = new System.Drawing.Size(145, 29);
             this.checkEditing.TabIndex = 19;
             this.checkEditing.Text = "Edit Pixels";
             this.checkEditing.UseVisualStyleBackColor = true;
@@ -355,9 +361,10 @@ namespace Profeet
             this.radioButton4.AutoSize = true;
             this.radioButton4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioButton4.Enabled = false;
-            this.radioButton4.Location = new System.Drawing.Point(137, 275);
+            this.radioButton4.Location = new System.Drawing.Point(183, 340);
+            this.radioButton4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(129, 62);
+            this.radioButton4.Size = new System.Drawing.Size(172, 76);
             this.radioButton4.TabIndex = 10;
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "radioButton4";
@@ -368,9 +375,10 @@ namespace Profeet
             this.radioSwap.AutoSize = true;
             this.radioSwap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioSwap.Enabled = false;
-            this.radioSwap.Location = new System.Drawing.Point(3, 275);
+            this.radioSwap.Location = new System.Drawing.Point(4, 340);
+            this.radioSwap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioSwap.Name = "radioSwap";
-            this.radioSwap.Size = new System.Drawing.Size(128, 62);
+            this.radioSwap.Size = new System.Drawing.Size(171, 76);
             this.radioSwap.TabIndex = 9;
             this.radioSwap.TabStop = true;
             this.radioSwap.Text = "Swap Color";
@@ -382,9 +390,10 @@ namespace Profeet
             this.radioFill.AutoSize = true;
             this.radioFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioFill.Enabled = false;
-            this.radioFill.Location = new System.Drawing.Point(137, 207);
+            this.radioFill.Location = new System.Drawing.Point(183, 256);
+            this.radioFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioFill.Name = "radioFill";
-            this.radioFill.Size = new System.Drawing.Size(129, 62);
+            this.radioFill.Size = new System.Drawing.Size(172, 76);
             this.radioFill.TabIndex = 8;
             this.radioFill.TabStop = true;
             this.radioFill.Text = "Fill Tool";
@@ -399,11 +408,12 @@ namespace Profeet
             this.tableLayoutPanel4.Controls.Add(this.colorBoxPreset6, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.colorBoxPreset5, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(137, 139);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(183, 172);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(129, 62);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(172, 76);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
             // colorBoxPreset6
@@ -411,9 +421,10 @@ namespace Profeet
             this.colorBoxPreset6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset6.Enabled = false;
-            this.colorBoxPreset6.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxPreset6.Location = new System.Drawing.Point(90, 4);
+            this.colorBoxPreset6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset6.Name = "colorBoxPreset6";
-            this.colorBoxPreset6.Size = new System.Drawing.Size(59, 56);
+            this.colorBoxPreset6.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset6.TabIndex = 3;
             this.colorBoxPreset6.TabStop = false;
             this.colorBoxPreset6.Click += new System.EventHandler(this.colorBoxPreset6_Click);
@@ -423,9 +434,10 @@ namespace Profeet
             this.colorBoxPreset5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset5.Enabled = false;
-            this.colorBoxPreset5.Location = new System.Drawing.Point(3, 3);
+            this.colorBoxPreset5.Location = new System.Drawing.Point(4, 4);
+            this.colorBoxPreset5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset5.Name = "colorBoxPreset5";
-            this.colorBoxPreset5.Size = new System.Drawing.Size(58, 56);
+            this.colorBoxPreset5.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset5.TabIndex = 2;
             this.colorBoxPreset5.TabStop = false;
             this.colorBoxPreset5.Click += new System.EventHandler(this.colorBoxPreset5_Click);
@@ -434,9 +446,10 @@ namespace Profeet
             // 
             this.buttonEyedropper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonEyedropper.Enabled = false;
-            this.buttonEyedropper.Location = new System.Drawing.Point(3, 139);
+            this.buttonEyedropper.Location = new System.Drawing.Point(4, 172);
+            this.buttonEyedropper.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonEyedropper.Name = "buttonEyedropper";
-            this.buttonEyedropper.Size = new System.Drawing.Size(128, 62);
+            this.buttonEyedropper.Size = new System.Drawing.Size(171, 76);
             this.buttonEyedropper.TabIndex = 5;
             this.buttonEyedropper.Text = "Eyedropper";
             this.buttonEyedropper.UseVisualStyleBackColor = true;
@@ -447,9 +460,10 @@ namespace Profeet
             this.colorBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBox.Enabled = false;
-            this.colorBox.Location = new System.Drawing.Point(3, 3);
+            this.colorBox.Location = new System.Drawing.Point(4, 4);
+            this.colorBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBox.Name = "colorBox";
-            this.colorBox.Size = new System.Drawing.Size(128, 62);
+            this.colorBox.Size = new System.Drawing.Size(171, 76);
             this.colorBox.TabIndex = 1;
             this.colorBox.TabStop = false;
             // 
@@ -457,9 +471,10 @@ namespace Profeet
             // 
             this.buttonColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonColor.Enabled = false;
-            this.buttonColor.Location = new System.Drawing.Point(3, 71);
+            this.buttonColor.Location = new System.Drawing.Point(4, 88);
+            this.buttonColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonColor.Name = "buttonColor";
-            this.buttonColor.Size = new System.Drawing.Size(128, 62);
+            this.buttonColor.Size = new System.Drawing.Size(171, 76);
             this.buttonColor.TabIndex = 2;
             this.buttonColor.Text = "Color";
             this.buttonColor.UseVisualStyleBackColor = true;
@@ -473,11 +488,12 @@ namespace Profeet
             this.tableLayoutPanel2.Controls.Add(this.colorBoxPreset2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.colorBoxPreset1, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(137, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(183, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(129, 62);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(172, 76);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // colorBoxPreset2
@@ -485,9 +501,10 @@ namespace Profeet
             this.colorBoxPreset2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset2.Enabled = false;
-            this.colorBoxPreset2.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxPreset2.Location = new System.Drawing.Point(90, 4);
+            this.colorBoxPreset2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset2.Name = "colorBoxPreset2";
-            this.colorBoxPreset2.Size = new System.Drawing.Size(59, 56);
+            this.colorBoxPreset2.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset2.TabIndex = 3;
             this.colorBoxPreset2.TabStop = false;
             this.colorBoxPreset2.Click += new System.EventHandler(this.colorBoxPreset2_Click);
@@ -497,9 +514,10 @@ namespace Profeet
             this.colorBoxPreset1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset1.Enabled = false;
-            this.colorBoxPreset1.Location = new System.Drawing.Point(3, 3);
+            this.colorBoxPreset1.Location = new System.Drawing.Point(4, 4);
+            this.colorBoxPreset1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset1.Name = "colorBoxPreset1";
-            this.colorBoxPreset1.Size = new System.Drawing.Size(58, 56);
+            this.colorBoxPreset1.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset1.TabIndex = 2;
             this.colorBoxPreset1.TabStop = false;
             this.colorBoxPreset1.Click += new System.EventHandler(this.colorBoxPreset1_Click);
@@ -512,11 +530,12 @@ namespace Profeet
             this.tableLayoutPanel3.Controls.Add(this.colorBoxPreset4, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.colorBoxPreset3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(137, 71);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(183, 88);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(129, 62);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(172, 76);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // colorBoxPreset4
@@ -524,9 +543,10 @@ namespace Profeet
             this.colorBoxPreset4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset4.Enabled = false;
-            this.colorBoxPreset4.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxPreset4.Location = new System.Drawing.Point(90, 4);
+            this.colorBoxPreset4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset4.Name = "colorBoxPreset4";
-            this.colorBoxPreset4.Size = new System.Drawing.Size(59, 56);
+            this.colorBoxPreset4.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset4.TabIndex = 3;
             this.colorBoxPreset4.TabStop = false;
             this.colorBoxPreset4.Click += new System.EventHandler(this.colorBoxPreset4_Click);
@@ -536,9 +556,10 @@ namespace Profeet
             this.colorBoxPreset3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxPreset3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxPreset3.Enabled = false;
-            this.colorBoxPreset3.Location = new System.Drawing.Point(3, 3);
+            this.colorBoxPreset3.Location = new System.Drawing.Point(4, 4);
+            this.colorBoxPreset3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxPreset3.Name = "colorBoxPreset3";
-            this.colorBoxPreset3.Size = new System.Drawing.Size(58, 56);
+            this.colorBoxPreset3.Size = new System.Drawing.Size(78, 68);
             this.colorBoxPreset3.TabIndex = 2;
             this.colorBoxPreset3.TabStop = false;
             this.colorBoxPreset3.Click += new System.EventHandler(this.colorBoxPreset3_Click);
@@ -548,9 +569,10 @@ namespace Profeet
             this.radioPaint.AutoSize = true;
             this.radioPaint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioPaint.Enabled = false;
-            this.radioPaint.Location = new System.Drawing.Point(3, 207);
+            this.radioPaint.Location = new System.Drawing.Point(4, 256);
+            this.radioPaint.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioPaint.Name = "radioPaint";
-            this.radioPaint.Size = new System.Drawing.Size(128, 62);
+            this.radioPaint.Size = new System.Drawing.Size(171, 76);
             this.radioPaint.TabIndex = 7;
             this.radioPaint.TabStop = true;
             this.radioPaint.Text = "Paintbrush";
@@ -560,9 +582,10 @@ namespace Profeet
             // trackBar1
             // 
             this.trackBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar1.Location = new System.Drawing.Point(137, 411);
+            this.trackBar1.Location = new System.Drawing.Point(183, 508);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(129, 62);
+            this.trackBar1.Size = new System.Drawing.Size(172, 76);
             this.trackBar1.TabIndex = 12;
             this.trackBar1.Visible = false;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
@@ -570,9 +593,10 @@ namespace Profeet
             // trackBar2
             // 
             this.trackBar2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar2.Location = new System.Drawing.Point(137, 479);
+            this.trackBar2.Location = new System.Drawing.Point(183, 592);
+            this.trackBar2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(129, 62);
+            this.trackBar2.Size = new System.Drawing.Size(172, 76);
             this.trackBar2.TabIndex = 13;
             this.trackBar2.Visible = false;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
@@ -580,9 +604,10 @@ namespace Profeet
             // trackBar3
             // 
             this.trackBar3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trackBar3.Location = new System.Drawing.Point(137, 547);
+            this.trackBar3.Location = new System.Drawing.Point(183, 676);
+            this.trackBar3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(129, 62);
+            this.trackBar3.Size = new System.Drawing.Size(172, 76);
             this.trackBar3.TabIndex = 14;
             this.trackBar3.Visible = false;
             this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
@@ -591,10 +616,11 @@ namespace Profeet
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 408);
+            this.label1.Location = new System.Drawing.Point(4, 504);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label1.Size = new System.Drawing.Size(128, 68);
+            this.label1.Size = new System.Drawing.Size(171, 84);
             this.label1.TabIndex = 15;
             this.label1.Text = "label1";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -604,9 +630,10 @@ namespace Profeet
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 476);
+            this.label2.Location = new System.Drawing.Point(4, 588);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(128, 68);
+            this.label2.Size = new System.Drawing.Size(171, 84);
             this.label2.TabIndex = 16;
             this.label2.Text = "label2";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -616,9 +643,10 @@ namespace Profeet
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 544);
+            this.label3.Location = new System.Drawing.Point(4, 672);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 68);
+            this.label3.Size = new System.Drawing.Size(171, 84);
             this.label3.TabIndex = 17;
             this.label3.Text = "label3";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -629,9 +657,10 @@ namespace Profeet
             this.checkFunctionalMode.AutoSize = true;
             this.checkFunctionalMode.Checked = true;
             this.checkFunctionalMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkFunctionalMode.Location = new System.Drawing.Point(137, 615);
+            this.checkFunctionalMode.Location = new System.Drawing.Point(183, 760);
+            this.checkFunctionalMode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkFunctionalMode.Name = "checkFunctionalMode";
-            this.checkFunctionalMode.Size = new System.Drawing.Size(105, 24);
+            this.checkFunctionalMode.Size = new System.Drawing.Size(148, 29);
             this.checkFunctionalMode.TabIndex = 18;
             this.checkFunctionalMode.Text = "Pan & Zoom";
             this.checkFunctionalMode.UseVisualStyleBackColor = true;
@@ -645,11 +674,12 @@ namespace Profeet
             this.tableLayoutPanel7.Controls.Add(this.colorBoxStartColor, 1, 0);
             this.tableLayoutPanel7.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 343);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(4, 424);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(128, 62);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(171, 76);
             this.tableLayoutPanel7.TabIndex = 20;
             // 
             // colorBoxStartColor
@@ -657,9 +687,10 @@ namespace Profeet
             this.colorBoxStartColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxStartColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxStartColor.Enabled = false;
-            this.colorBoxStartColor.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxStartColor.Location = new System.Drawing.Point(89, 4);
+            this.colorBoxStartColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxStartColor.Name = "colorBoxStartColor";
-            this.colorBoxStartColor.Size = new System.Drawing.Size(58, 56);
+            this.colorBoxStartColor.Size = new System.Drawing.Size(78, 68);
             this.colorBoxStartColor.TabIndex = 3;
             this.colorBoxStartColor.TabStop = false;
             this.colorBoxStartColor.Click += new System.EventHandler(this.imageBoxStartColor_Click);
@@ -668,9 +699,10 @@ namespace Profeet
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Location = new System.Drawing.Point(4, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 62);
+            this.label4.Size = new System.Drawing.Size(77, 76);
             this.label4.TabIndex = 0;
             this.label4.Text = "Start Color";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -683,11 +715,12 @@ namespace Profeet
             this.tableLayoutPanel8.Controls.Add(this.colorBoxEndColor, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(137, 343);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(183, 424);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(129, 62);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(172, 76);
             this.tableLayoutPanel8.TabIndex = 21;
             // 
             // colorBoxEndColor
@@ -695,9 +728,10 @@ namespace Profeet
             this.colorBoxEndColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.colorBoxEndColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorBoxEndColor.Enabled = false;
-            this.colorBoxEndColor.Location = new System.Drawing.Point(67, 3);
+            this.colorBoxEndColor.Location = new System.Drawing.Point(90, 4);
+            this.colorBoxEndColor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.colorBoxEndColor.Name = "colorBoxEndColor";
-            this.colorBoxEndColor.Size = new System.Drawing.Size(59, 56);
+            this.colorBoxEndColor.Size = new System.Drawing.Size(78, 68);
             this.colorBoxEndColor.TabIndex = 3;
             this.colorBoxEndColor.TabStop = false;
             this.colorBoxEndColor.Click += new System.EventHandler(this.imageBoxEndColor_Click);
@@ -706,9 +740,10 @@ namespace Profeet
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Location = new System.Drawing.Point(4, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 62);
+            this.label5.Size = new System.Drawing.Size(78, 76);
             this.label5.TabIndex = 0;
             this.label5.Text = "End Color";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -718,9 +753,10 @@ namespace Profeet
             this.panelOverlay.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelOverlay.Controls.Add(this.tableLayoutPanel5);
             this.panelOverlay.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelOverlay.Location = new System.Drawing.Point(0, 666);
+            this.panelOverlay.Location = new System.Drawing.Point(0, 834);
+            this.panelOverlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelOverlay.Name = "panelOverlay";
-            this.panelOverlay.Size = new System.Drawing.Size(711, 45);
+            this.panelOverlay.Size = new System.Drawing.Size(949, 55);
             this.panelOverlay.TabIndex = 3;
             // 
             // tableLayoutPanel5
@@ -732,10 +768,11 @@ namespace Profeet
             this.tableLayoutPanel5.Controls.Add(this.overlayTrackBar, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(707, 41);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(945, 51);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -750,11 +787,12 @@ namespace Profeet
             this.tableLayoutPanel6.Controls.Add(this.overlayCheckBox, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.radioZero, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(366, 35);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(489, 43);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // radioCustom
@@ -762,9 +800,10 @@ namespace Profeet
             this.radioCustom.AutoSize = true;
             this.radioCustom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioCustom.Enabled = false;
-            this.radioCustom.Location = new System.Drawing.Point(276, 3);
+            this.radioCustom.Location = new System.Drawing.Point(370, 4);
+            this.radioCustom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioCustom.Name = "radioCustom";
-            this.radioCustom.Size = new System.Drawing.Size(87, 29);
+            this.radioCustom.Size = new System.Drawing.Size(115, 35);
             this.radioCustom.TabIndex = 3;
             this.radioCustom.TabStop = true;
             this.radioCustom.Text = "Custom";
@@ -776,9 +815,10 @@ namespace Profeet
             this.radioHundred.AutoSize = true;
             this.radioHundred.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioHundred.Enabled = false;
-            this.radioHundred.Location = new System.Drawing.Point(185, 3);
+            this.radioHundred.Location = new System.Drawing.Point(248, 4);
+            this.radioHundred.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioHundred.Name = "radioHundred";
-            this.radioHundred.Size = new System.Drawing.Size(85, 29);
+            this.radioHundred.Size = new System.Drawing.Size(114, 35);
             this.radioHundred.TabIndex = 2;
             this.radioHundred.TabStop = true;
             this.radioHundred.Text = "100%";
@@ -790,9 +830,10 @@ namespace Profeet
             this.overlayCheckBox.AutoSize = true;
             this.overlayCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.overlayCheckBox.Enabled = false;
-            this.overlayCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.overlayCheckBox.Location = new System.Drawing.Point(4, 4);
+            this.overlayCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.overlayCheckBox.Name = "overlayCheckBox";
-            this.overlayCheckBox.Size = new System.Drawing.Size(85, 29);
+            this.overlayCheckBox.Size = new System.Drawing.Size(114, 35);
             this.overlayCheckBox.TabIndex = 0;
             this.overlayCheckBox.Text = "Overlay";
             this.overlayCheckBox.UseVisualStyleBackColor = true;
@@ -803,9 +844,10 @@ namespace Profeet
             this.radioZero.AutoSize = true;
             this.radioZero.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioZero.Enabled = false;
-            this.radioZero.Location = new System.Drawing.Point(94, 3);
+            this.radioZero.Location = new System.Drawing.Point(126, 4);
+            this.radioZero.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioZero.Name = "radioZero";
-            this.radioZero.Size = new System.Drawing.Size(85, 29);
+            this.radioZero.Size = new System.Drawing.Size(114, 35);
             this.radioZero.TabIndex = 1;
             this.radioZero.TabStop = true;
             this.radioZero.Text = "0%";
@@ -816,25 +858,26 @@ namespace Profeet
             // 
             this.overlayTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.overlayTrackBar.Enabled = false;
-            this.overlayTrackBar.Location = new System.Drawing.Point(375, 3);
+            this.overlayTrackBar.Location = new System.Drawing.Point(501, 4);
+            this.overlayTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.overlayTrackBar.Maximum = 100;
             this.overlayTrackBar.Name = "overlayTrackBar";
-            this.overlayTrackBar.Size = new System.Drawing.Size(329, 35);
+            this.overlayTrackBar.Size = new System.Drawing.Size(440, 43);
             this.overlayTrackBar.TabIndex = 1;
             this.overlayTrackBar.TickFrequency = 10;
             this.overlayTrackBar.Scroll += new System.EventHandler(this.overlayTrackBar_Scroll);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 711);
+            this.ClientSize = new System.Drawing.Size(1312, 889);
             this.Controls.Add(this.panelOverlay);
             this.Controls.Add(this.panelPaint);
             this.Controls.Add(this.panelImage);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -964,5 +1007,6 @@ namespace Profeet
         private Emgu.CV.Structure.MCvScalar endColor;
         private bool endColorChosen;
         private System.Windows.Forms.Label label5;
+        private System.Drawing.Point swapCorner1;
     }
 }
