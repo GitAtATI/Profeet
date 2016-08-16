@@ -679,7 +679,11 @@ namespace Profeet
                 }
                 else
                 {
-                    Console.WriteLine(pt.ToString());
+                    Console.Write(e.Location.ToString());
+                    Console.Write(" = ");
+                    Console.Write(pt.ToString());
+                    Console.Write(" @ ");
+                    Console.WriteLine(imageBox1.ZoomScale);
                 }
 
             }
@@ -697,7 +701,7 @@ namespace Profeet
                         new MCvScalar(20), Connectivity.FourConnected, FloodFillType.Default);
                 }
             }
-            if (radioSwap.Checked) //Swap brush
+            else if (radioSwap.Checked) //Swap brush
             {
                 swapCorner1 = pt;
             }
@@ -793,16 +797,16 @@ namespace Profeet
         //Returns location of that click on the actual image, rather than the ImageBox
         private Point getAdjustedClick(MouseEventArgs e)
         {
+            double zoom = imageBox1.ZoomScale;
             double xOffset = imageBox1.HorizontalScrollBar.Value;
             double yOffset = imageBox1.VerticalScrollBar.Value;
-            double zoom = imageBox1.ZoomScale;
-            int x = (int)(xOffset + (e.X / zoom));
-            int y = (int)(yOffset + (e.Y / zoom));
+            int x = (int)(xOffset + ((e.X + (zoom/2)) / zoom));
+            int y = (int)(yOffset + ((e.Y + (zoom/2)) / zoom));
 
             if (overlayCheckBox.Checked && factorX != 0 && factorY != 0)
             {
-                x = x / factorX;
-                y = y / factorY;
+                x = (x / factorX);
+                y = (y / factorY);
             }
 
             return new Point(x, y);
