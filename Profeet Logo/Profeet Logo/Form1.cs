@@ -30,8 +30,10 @@ namespace Profeet
             mode = new Emgu.CV.UI.ImageBox.FunctionalModeOption[2] {
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum,
                 Emgu.CV.UI.ImageBox.FunctionalModeOption.PanAndZoom};
-            colorAChosen = false;
-            colorBChosen = false;
+            colorA = new MCvScalar(0, 0, 0);
+            updateColorBox(colorBoxA, colorA);
+            colorB = new MCvScalar(255, 255, 255);
+            updateColorBox(colorBoxB, colorB);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -662,10 +664,8 @@ namespace Profeet
                 int g = i.Data[pt.Y, pt.X, 1];
                 int r = i.Data[pt.Y, pt.X, 2];
                 colorA = new MCvScalar(b, g, r);
-                updateColorBox();
-                startColor = new MCvScalar(b, g, r);
-                colorAChosen = true;
-                colorBoxA.Image = makeColorBox(58, 56, startColor);
+                updateColorBox(colorBoxA, colorA);
+                updateColorBox(colorBoxA, colorA);
                 buttonEyedropper_Click(null, null);
                 return;
             }
@@ -834,10 +834,14 @@ namespace Profeet
             if (checkFunctionalMode.Checked)
             {
                 enablePan();
+                checkEditing.Checked = false;
+                checkEditing_CheckedChanged(null, null);
             }
             else
             {
                 disablePan();
+                checkEditing.Checked = true;
+                checkEditing_CheckedChanged(null, null);
             }
         }
 
@@ -860,7 +864,7 @@ namespace Profeet
             if (result != null)
             {
                 colorA = (MCvScalar)result;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -904,12 +908,6 @@ namespace Profeet
 
         private void radioSwap_CheckedChanged(object sender, EventArgs e)
         {
-            if (!colorAChosen || !colorBChosen)
-            {
-                radioPaint.Checked = true;
-                return;
-            }
-
             label1.Visible = false;
             trackBar1.Visible = false;
             label2.Visible = false;
@@ -948,9 +946,9 @@ namespace Profeet
             return i;
         }
 
-        public void updateColorBox()
+        public void updateColorBox(Emgu.CV.UI.ImageBox box, MCvScalar color)
         {
-            colorBoxA.Image = makeColorBox(58, 56, colorA);
+            box.Image = makeColorBox(box.Width, box.Height, color);
         }
 
         private void buttonEyedropper_Click(object sender, EventArgs e)
@@ -992,13 +990,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset1 = (MCvScalar)result;
-                    colorBoxPreset1.Image = makeColorBox(58, 56, preset1);
+                    updateColorBox(colorBoxPreset1, preset1);
                 }
             }
             else
             {
                 colorA = preset1;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1011,13 +1009,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset2 = (MCvScalar)result;
-                    colorBoxPreset2.Image = makeColorBox(58, 56, preset2);
+                    updateColorBox(colorBoxPreset2, preset2);
                 }
             }
             else
             {
                 colorA = preset2;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1030,13 +1028,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset3 = (MCvScalar)result;
-                    colorBoxPreset3.Image = makeColorBox(58, 56, preset3);
+                    updateColorBox(colorBoxPreset3, preset3);
                 }
             }
             else
             {
                 colorA = preset3;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1049,13 +1047,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset4 = (MCvScalar)result;
-                    colorBoxPreset4.Image = makeColorBox(58, 56, preset4);
+                    updateColorBox(colorBoxPreset4, preset4);
                 }
             }
             else
             {
                 colorA = preset4;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1068,13 +1066,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset5 = (MCvScalar)result;
-                    colorBoxPreset5.Image = makeColorBox(58, 56, preset5);
+                    updateColorBox(colorBoxPreset5, preset5);
                 }
             }
             else
             {
                 colorA = preset5;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1087,13 +1085,13 @@ namespace Profeet
                 if (result != null)
                 {
                     preset6 = (MCvScalar)result;
-                    colorBoxPreset6.Image = makeColorBox(58, 56, preset6);
+                    updateColorBox(colorBoxPreset6, preset6);
                 }
             }
             else
             {
                 colorA = preset6;
-                updateColorBox();
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1104,8 +1102,7 @@ namespace Profeet
             if (result != null)
             {
                 colorA = (MCvScalar)result;
-                colorBoxA.Image = makeColorBox(58, 56, colorA);
-                colorAChosen = true;
+                updateColorBox(colorBoxA, colorA);
             }
         }
 
@@ -1116,8 +1113,7 @@ namespace Profeet
             if (result != null)
             {
                 colorB = (MCvScalar)result;
-                colorBoxB.Image = makeColorBox(58, 56, colorB);
-                colorBChosen = true;
+                updateColorBox(colorBoxB, colorB);
             }
         }
 
@@ -1140,7 +1136,7 @@ namespace Profeet
                 colorBoxA.Enabled = true;
                 colorBoxB.Enabled = true;
                 checkFunctionalMode.Checked = false;
-                checkFunctionalMode_CheckedChanged(null, null);
+                disablePan();
             }
             else
             {
@@ -1159,7 +1155,7 @@ namespace Profeet
                 colorBoxA.Enabled = false;
                 colorBoxB.Enabled = false;
                 checkFunctionalMode.Checked = true;
-                checkFunctionalMode_CheckedChanged(null, null);
+                enablePan();
             }
         }
     }

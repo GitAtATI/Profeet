@@ -927,9 +927,6 @@ namespace Profeet
         private Emgu.CV.Structure.MCvScalar preset6;
         public bool pickingColor;
         private System.Windows.Forms.CheckBox checkEditing;
-        private Emgu.CV.Structure.MCvScalar startColor;
-        private bool colorAChosen;
-        private bool colorBChosen;
         private System.Drawing.Point swapCorner1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private Emgu.CV.UI.ImageBox colorBoxB;
